@@ -1,0 +1,21 @@
+h1 Welcome Organisers!
+
+body
+    h3 Login
+    form(action='organisers/logon' method='POST')
+        label email:
+        br
+        input(name='email' type='email' value='')
+        br
+        br
+        label Password:
+        br
+        input(name='password' type='password' value='')
+        br
+        button(value='Submit', type='submit') Sign in
+        br
+        h4 Haven't sign up yet?
+        a( href='/organisers/signup') Click here to sign up
+
+
+

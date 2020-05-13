@@ -1,0 +1,6 @@
+extends signUp
+block content
+    script.
+        if(window.confirm("Username/email is not available. \nPlease try again!")){
+            window.location='signUp';
+        }

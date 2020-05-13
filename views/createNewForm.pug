@@ -1,0 +1,34 @@
+extends index
+block content
+
+    h1 Post New Form
+    form(action='createForm', method='post', class='createForm')
+        p
+        | Club Name:
+        input(name='name', value='', type='name')
+        br
+        br
+        | Description:
+        input(name='description', value='', type='description')
+        br
+        br
+        | Address:
+        input(name='address', value='', type='address')
+        br
+        br
+        | Time:
+        input(name='time', value='', type='time')
+        br
+        br
+        | Quantity:
+        input(name='quantity', value='', type='quantity')
+        br
+        br
+        | Photo:
+        input(name='photo', value='', type='photo')
+        br
+        br
+        button(value='Submit', type='submit') Post Form
+
+
+

@@ -1,0 +1,8 @@
+extends login
+block content
+    script.
+        if(window.confirm("Sorry, incorrect username and/or password. Please try again.")){
+            window.location='login'
+        }
+    a(class='button' href='login') Click here to log in
+

@@ -1,0 +1,10 @@
+h1 Hello #{organisation_name}
+
+body
+    a(href='/forms') Click here to open form management
+    br
+    a(href='/organisers/update/'+id) Click here to edit organisation profile
+    br
+    br
+    form(action='delete/'+id method='GET')
+        button(value='Submit' type='submit') Delete this organiser account

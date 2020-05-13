@@ -1,0 +1,38 @@
+extends formIndex
+block content
+
+    h1 Update Form
+    form(action='updateForm', method='post', class='updateForm')
+        p
+        | Form ID:
+        input(name='id', value='', type='id')
+        br
+        br
+        | Club Name:
+        input(name='name', value='', type='name')
+        br
+        br
+        | Description:
+        input(name='description', value='', type='description')
+        br
+        br
+        | Address:
+        input(name='address', value='', type='address')
+        br
+        br
+        | Time:
+        input(name='time', value='', type='time')
+        br
+        br
+        | Quantity:
+        input(name='quantity', value='', type='quantity')
+        br
+        br
+        | Photo:
+        input(name='photo', value='', type='photo')
+        br
+        br
+        button(value='Submit', type='submit') Update Form
+
+
+

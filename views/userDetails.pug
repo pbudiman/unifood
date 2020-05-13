@@ -1,0 +1,22 @@
+extends welcomeUser
+block content
+    h1 Hi #{first_name} #{last_name}
+    h2 Fill details to be changed:
+    form(action='update/'+username, method='post')
+        | Username:
+        input(name='username', type='text')
+        br
+        | Email:
+        input(name='email', type='email')
+        br
+        | First name:
+        input(name='first_name', type='text')
+        br
+        | Last name:
+        input(name='last_name', type='text')
+        br
+        | Password:
+        input(name='password', type='password')
+        br
+        button(value='Submit', type='submit') Confirm details
+

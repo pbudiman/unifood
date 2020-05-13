@@ -1,0 +1,14 @@
+extends formIndex
+block content
+
+    h1 Delete a Form
+    form(action='deleteForm', method='post', class='deleteForm')
+        p
+        | Form ID:
+        input(name='id', value='', type='id')
+        br
+        br
+        button(value='Submit', type='submit') Delete Form
+
+
+

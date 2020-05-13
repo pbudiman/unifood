@@ -1,0 +1,41 @@
+extends login
+block content
+        script(type='text/javascript').
+            function showLocation(position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                document.getElementById('latitude').value = latitude;
+                document.getElementById('longitude').value = longitude;
+                alert("Latitude : " + latitude + " Longitude: " + longitude);
+            }
+            function errorHandler(err) {
+                if(err.code == 1) {
+                    alert("Error: Access is denied!");
+                } else if( err.code == 2) {
+                    alert("Error: Position is unavailable!");
+                }
+            }
+            function getLocation() {
+                if(navigator.geolocation) {
+                    // timeout at 60000 milliseconds (60 seconds)
+                    var options = {timeout:60000};
+                    navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
+                } else {
+                    alert("Sorry, browser does not support geolocation!");
+                }
+            }
+            function noLocation() {
+                document.getElementById('latitude').value = undefined;
+                document.getElementById('longitude').value = undefined;
+
+            }
+        h1 Welcome
+        h4 Do you mind to share your location?
+        form(action='/locations' method='POST')
+            input(type='button', onclick='getLocation();', value='Yes, I do!')
+            input(name='latitude' type='label', id='latitude', value="")
+            input(name='longitude' type='label', id='longitude', value="")
+            input(type='hidden', id='username', value="")
+            br
+            input(type='submit' value='Submit')
+            //button(type='submit', value='submit') Submit

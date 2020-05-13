@@ -1,0 +1,13 @@
+extends login
+block content
+    h1 Welcome #{first_name}!
+    br
+    a(class='button' href='/users/login/'+username) Click here to change account details
+    |
+    br
+    a(class='button' href='/') Click here to log out
+    |
+    br
+    a(class='button' href='/users/delete/'+username) Click here to delete account
+
+

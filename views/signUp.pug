@@ -1,0 +1,32 @@
+extends index
+block content
+    h1 Sign up
+    form(action='signUp', method='post', class='signup')
+        p
+        | Username:
+        br
+        input(name='username',type='text')
+        br
+        | Email:
+        br
+        input(name='email', type='email')
+        br
+        | First name:
+        br
+        input(name='first_name', type='text')
+        br
+        |Last name:
+        br
+        input(name='last_name', type='text')
+        br
+        | Password:
+        br
+        input(name='password', type='password')
+        br
+        button(value='Submit', type='submit') Sign up
+        br
+        a(href='login') Already have an account?
+
+
+
+

@@ -1,0 +1,22 @@
+extends index
+block content
+
+    h1 Log in
+    form(action='login', method='post', class='signin')
+        p
+        | Username:
+        br
+        input(name='username', type='text')
+        br
+        | Password:
+        br
+        input(name='password', type='password')
+        br
+        button(value='Submit', type='submit') Sign in
+        br
+        | New User?
+        |
+        a(class='button' href='/users/signUp') Click here to sign up
+
+
+
