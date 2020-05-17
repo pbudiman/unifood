@@ -1,0 +1,102 @@
+
+.greeting{
+    color:'grey';
+    font-size: xx-large;
+    padding: 3%;
+    text-align: left;
+    vertical-align: sub;
+    font-family: 'Nunito', sans-serif;
+    font-weight: bold;  
+}
+
+.button {
+    border-radius: 8px;
+    background-color: antiquewhite; 
+    border: none;
+    color: rgb(211, 115, 115);
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: medium;
+  }
+.option{
+    grid-area:option;
+}
+.notifs{
+    grid-area:notifs;
+    max-width: 1fr;
+  
+
+}
+.allForms{
+    grid-area:allForms;
+    padding:1fr;
+}
+
+.grid-container{
+    display: grid;
+    /* grid-template-rows: 1fr 1fr 1fr 1fr 1fr ; */
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+    grid-template-areas: 
+    'option option option option option'
+    'notifs notifs allForms allForms allForms';
+    grid-gap:1%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-right: 10%;
+    padding-left: 10%;
+    row-gap: 2%;
+    column-gap: 2%;
+
+}
+.notifBox{
+    border-radius: 10px;
+    max-width: 1fr;
+    background-color: rgb(238, 203, 217);
+    padding: 0.5%;
+    margin: 0.5%;
+}
+.formBox{
+    background-color: rgb(238, 182, 150);
+    border: solid rgb(238, 182, 150);
+    border-radius: 10px;
+    width: 2.5fr;
+    padding: 0.5%;
+    margin: 0.5%;
+}
+div.option {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    overflow: scroll;
+    max-width: 1fr;
+    padding: 20px ;
+
+  }
+div.notifs {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    overflow: scroll;
+    max-width: 1fr;
+   
+    padding: 20px;
+ 
+  }
+  div.allForms {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    overflow: scroll;
+    padding: 20px;
+  }
+.label{
+    color:'grey';
+    font-size: large;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    font-weight: bold;
+}
+
+

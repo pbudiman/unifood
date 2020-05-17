@@ -10,12 +10,16 @@ const createForm = async (req, res,next) => {
         description:req.body.description,
         address:req.body.address,
         time:req.body.time,
+        food: req.body.food,
         quantity:req.body.quantity,
         photo:req.body.photo,
+        latitude:req.body.latitude,
+        longitude: req.body.longitude
     };
     var data = new Form(new_form);
     data.save();
-    res.render('formManagement',{name:req.body.name, formID:Form.id});
+    // res.render('formManagement',{name:req.body.name, formID:Form.id});
+    res.send("New form added");
 }
 
 //update form
@@ -32,8 +36,11 @@ const updateForm = async (req, res, next) => {
         doc.description = req.body.description;
         doc.address = req.body.address;
         doc.time = req.body.time;
+        doc.food = req.body.food;
         doc.quantity = req.body.quantity;
         doc.photo = req.body.photo;
+        doc.latitude = req.body.latitude;
+        doc.longitude = req.body.longitude;
         doc.save();
     });
     console.log("Form is updated!");
@@ -60,8 +67,6 @@ const getAllForms = async (req, res) => {
         return res.send("Database query failed!");
     }
 };
-
-
 
 // Remember to export the callbacks
 module.exports = {
