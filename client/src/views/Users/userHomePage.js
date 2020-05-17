@@ -30,11 +30,15 @@ export default function UserDashboard(props) {
   const [first_name,setFirstName]=useState();
   const [userLat, setUserLat] = useState(Number);
   const [userLong, setUserLong] = useState(Number);
+// const [eventLat, setEventLat] = useState(Number);
+// const [eventLong, setEventLong] = useState(Number);
+// const [distance, setDistance] = useState(Number);
   const [allData, setAllData]=useState([]);
   const [newData, setNewData]=useState([]);
   const [notifyData, setNotifyData]=useState([]);
   const [incomingData, setIncomingData]=useState([]);
   const [forms, setForms] = useState([]);
+// var notifyData = [];
 
   const classes = useStyles();
   const { ...rest } = props;
@@ -54,11 +58,13 @@ export default function UserDashboard(props) {
     if(incomingData.length > allData.length) {
       for (let i= allData.length; i<incomingData.length; i++) {
         newData.push(incomingData[i]);
+        // console.log("New PUSHED Data: ", incomingData[i]);
       }
       // All data = incoming data
       setAllData(incomingData);
       // keep the data in new data
       setNewData(newData);
+      // console.log("NEW DATA LENGTH: ", newData.length);
 
     }
     getNotificationData();
@@ -69,6 +75,7 @@ export default function UserDashboard(props) {
 
     // check location has been retrieved
     if (userLat) {
+      // console.log("GOT INNNNN");
 
       // find the nearest leftover from user
       for (let i = 0; i < newData.length; i++) {
@@ -77,11 +84,10 @@ export default function UserDashboard(props) {
         const eventLong = newData[i].longitude;
         const distance = getDistance(userLat,userLong,eventLat,eventLong);
 
-        console.log("DISTANCEE: ", distance);
-        // considerably near (<400 metres)
-        if (distance < 0.4) {
-          console.log(distance);
-          console.log("NOTIFY DATA: ", notifyData.length);
+        // considerably near
+        if (distance < 1) {
+          // console.log(distance);
+          // console.log("NOTIFY DATA: ", notifyData.length);
 
           // initial data for notification
           if (notifyData.length === 0) {
@@ -103,8 +109,9 @@ export default function UserDashboard(props) {
           }
         }
       }
+      // setNewData([]);
     } else {
-      console.log("no loc");
+      // console.log("no loc");
     }
   }
 
@@ -125,6 +132,7 @@ export default function UserDashboard(props) {
       dist = dist * 60 * 1.1515;
       dist = dist * 1.609344;
 
+      // setDistance(dist);
       return dist;
     }
   }
@@ -151,6 +159,7 @@ export default function UserDashboard(props) {
       alert("Geolocation is not supported in this browser");
     }
   }
+
   
   getFirstName();
 
@@ -178,29 +187,25 @@ export default function UserDashboard(props) {
                 <div class='greeting'>
                     Hi {first_name}!
                   </div>
-                    <button class="button" onClick={()=>logOut()}>
-                          
+                  <div class='button'>
+                    <Button simple color="danger" size="md" onClick={()=>getLocation()}>
                       <div class='writing'>
-                        Log out
-                      </div>
-                    </button>
-                  
-                  
-                    <button class="button" onClick={()=>goUserDetails()}>
-                      <div class='writing'>
-                        Account details
-                      </div>
-                    </button>
-           
+                          Share my location!
+                        </div>
+                    </Button>
 
-                    
-                    <button class="button" onClick={()=>getLocation()}>
-              
+                    <Button simple color="danger" size="md" onClick={()=>goUserDetails()}>
                       <div class='writing'>
-                        Find food near me!
-                      </div>
-                    </button>
-                    
+                          Account details
+                        </div>
+                    </Button>
+
+                    <Button simple color="danger" size="md" onClick={()=>logOut()}>
+                      <div class='writing'>
+                          Log out
+                        </div>
+                    </Button>
+                    </div>
                 </div>
             
                 <div class="notifs">
@@ -211,9 +216,9 @@ export default function UserDashboard(props) {
                     {notifyData.map(res=>(
                         <div key={res.id}>
                             <div class='notifBox'>
-                                There is a <strong>{res.food} near you!</strong><br/>
-                              Last Pick Up Time: {res.time} <br/>
-                              {res.name} @ {res.address}<br/>
+                                New Entry from {res.name}!<br/>
+                                At {res.address} <br/>
+                                Time: {res.time}<br/>
                             </div>
                         </div>
                     ))}
@@ -225,10 +230,10 @@ export default function UserDashboard(props) {
                     <br/>
                     {forms.map(res=>(
                         <div key={res.id}>
-                            <div class='formBox' align={'left'}>
-                              <strong>{res.quantity} {res.food} left</strong> from {res.name}!<br/>
+                            <div class='formBox'>
+                                New Entry from {res.name}!<br/>
                                 At {res.address} <br/>
-                                Last Pick Up Time: {res.time}<br/>
+                                Time: {res.time}<br/>
                             </div>
                         </div>
                     ))} 

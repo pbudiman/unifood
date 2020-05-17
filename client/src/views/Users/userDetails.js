@@ -69,12 +69,8 @@ export default function UserDetails(props) {
         username=oldUsername;
       }
 
-      axios.post("/users/login/update/"+oldUsername,{username,email,first_name,last_name,password})
+      axios.post("users/login/update/"+oldUsername,{username,email,first_name,last_name,password})
         .then(res=> res.data.success?history.push({pathname:'/userdashboard', state:{detail:username}}):alert("Chosen email/username is taken."));
-    }
-
-    function goBack(){
-      history.push({pathname:'/userdashboard', state:{detail:oldUsername}})
     }
 
     const handleEmail = (event) => {
@@ -216,15 +212,12 @@ export default function UserDetails(props) {
                   }} 
                   
                 />
-                
-                      <button class='button' onClick={()=>goBack()}>
-                          Revert changes
-                      </button>
-                      <button class='button' onClick={()=>handleChanges()}>
-                          Make changes
-                      </button>
+                    <div class='button'>
+                      <Button simple color="danger" size="sm" justify="center" onClick={()=>handleChanges()}>
+                          Account detail
+                      </Button>
                       
-                     
+                    </div>   
                   
                 </div>
                 
@@ -233,7 +226,119 @@ export default function UserDetails(props) {
               </Grid> 
                
                                   
-          
+                {/* <NavPills
+                  alignCenter
+                  color="primary"
+                  tabs={[
+                    {
+                      tabButton: "Studio",
+                      tabIcon: Camera,
+                      tabContent: (
+                        <GridContainer justify="center">
+                          <GridItem xs={12} sm={12} md={4}>
+                            <img
+                              alt="..."
+                              src={studio1}
+                              className={navImageClasses}
+                            />
+                            <img
+                              alt="..."
+                              src={studio2}
+                              className={navImageClasses}
+                            />
+                          </GridItem>
+                          <GridItem xs={12} sm={12} md={4}>
+                            <img
+                              alt="..."
+                              src={studio5}
+                              className={navImageClasses}
+                            />
+                            <img
+                              alt="..."
+                              src={studio4}
+                              className={navImageClasses}
+                            />
+                          </GridItem>
+                        </GridContainer>
+                      )
+                    },
+                    {
+                      tabButton: "Work",
+                      tabIcon: Palette,
+                      tabContent: (
+                        <GridContainer justify="center">
+                          <GridItem xs={12} sm={12} md={4}>
+                            <img
+                              alt="..."
+                              src={work1}
+                              className={navImageClasses}
+                            />
+                            <img
+                              alt="..."
+                              src={work2}
+                              className={navImageClasses}
+                            />
+                            <img
+                              alt="..."
+                              src={work3}
+                              className={navImageClasses}
+                            />
+                          </GridItem>
+                          <GridItem xs={12} sm={12} md={4}>
+                            <img
+                              alt="..."
+                              src={work4}
+                              className={navImageClasses}
+                            />
+                            <img
+                              alt="..."
+                              src={work5}
+                              className={navImageClasses}
+                            />
+                          </GridItem>
+                        </GridContainer>
+                      )
+                    },
+                    {
+                      tabButton: "Favorite",
+                      tabIcon: Favorite,
+                      tabContent: (
+                        <GridContainer justify="center">
+                          <GridItem xs={12} sm={12} md={4}>
+                            <img
+                              alt="..."
+                              src={work4}
+                              className={navImageClasses}
+                            />
+                            <img
+                              alt="..."
+                              src={studio3}
+                              className={navImageClasses}
+                            />
+                          </GridItem>
+                          <GridItem xs={12} sm={12} md={4}>
+                            <img
+                              alt="..."
+                              src={work2}
+                              className={navImageClasses}
+                            />
+                            <img
+                              alt="..."
+                              src={work1}
+                              className={navImageClasses}
+                            />
+                            <img
+                              alt="..."
+                              src={studio1}
+                              className={navImageClasses}
+                            />
+                          </GridItem> */}
+                        {/* </GridContainer>
+                      )
+                    }
+                  ]}
+                /> */}
+             
             </GridContainer>
             </div>
           </div>

@@ -51,7 +51,7 @@ export default function OrganiserSignup(props) {
 
     function validateLogin(){
         console.log()
-        axios.post('https://unifood-app.herokuapp.com/users/login',{username,password})
+        axios.post('users/login',{username,password})
             .then(res => res.data.success? console.log("logged in"): alert("Incorrect username/ password.\nPlease Try again"))
     }
 

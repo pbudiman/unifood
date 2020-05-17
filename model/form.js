@@ -4,8 +4,7 @@ const formSchema = new mongoose.Schema({
     description:{type:String, required:true},
     address:{type:String, required:true},
     time:{type:String, required:true},
-    food: String,
-    quantity: Number,
+    quantity: String,
     photo: String,
     latitude: Number,
     longitude: Number
