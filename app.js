@@ -101,17 +101,22 @@ io.on("connection", socket => {
     });
 });
 
+// Step 3
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static( 'client/build' ));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); // relative path
+    });
+}
+
+
 // //production mode
 // if(process.env.NODE_ENV === 'production') {  
 //     app.use(express.static(path.join(__dirname, 'client/build')));  
 //     app.get('*', (req, res) => {    res.sendfile(path.join(__dirname = 'client/build/index.html'));  
 // })}
 
-//build mode
-// Right before your app.listen(), add this:
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});
 
 
 server.listen(process.env.PORT || 5000, () => {

@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/static/css/main.d54cca74.chunk.css",
+    "main.js": "/static/js/main.ae4f7a14.chunk.js",
+    "main.js.map": "/static/js/main.ae4f7a14.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.98a2b520.js",
+    "runtime-main.js.map": "/static/js/runtime-main.98a2b520.js.map",
+    "static/js/2.527a2313.chunk.js": "/static/js/2.527a2313.chunk.js",
+    "static/js/2.527a2313.chunk.js.map": "/static/js/2.527a2313.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.78504d6682eb35ccd9d1077e3c6e41e3.js": "/precache-manifest.78504d6682eb35ccd9d1077e3c6e41e3.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.d54cca74.chunk.css.map": "/static/css/main.d54cca74.chunk.css.map",
+    "static/js/2.527a2313.chunk.js.LICENSE.txt": "/static/js/2.527a2313.chunk.js.LICENSE.txt",
+    "static/media/Nunito-ExtraBold.ttf": "/static/media/Nunito-ExtraBold.19caf1c0.ttf",
+    "static/media/aboutus-bg.png": "/static/media/aboutus-bg.1c3a6e3a.png",
+    "static/media/christian.jpg": "/static/media/christian.56633ed3.jpg",
+    "static/media/clem-onojegaw.jpg": "/static/media/clem-onojegaw.c058841b.jpg",
+    "static/media/clem-onojeghuo.jpg": "/static/media/clem-onojeghuo.216ef03c.jpg",
+    "static/media/cynthia-del-rio.jpg": "/static/media/cynthia-del-rio.9813593c.jpg",
+    "static/media/headshot1.png": "/static/media/headshot1.3e08499b.png",
+    "static/media/headshot2.png": "/static/media/headshot2.a6f954f3.png",
+    "static/media/headshot3.png": "/static/media/headshot3.dd2151d2.png",
+    "static/media/homepage.png": "/static/media/homepage.d93004a4.png",
+    "static/media/mariya-georgieva.jpg": "/static/media/mariya-georgieva.4575c40b.jpg",
+    "static/media/olu-eletu.jpg": "/static/media/olu-eletu.4112cbc1.jpg",
+    "static/media/studio-1.jpg": "/static/media/studio-1.ae0150c0.jpg",
+    "static/media/studio-2.jpg": "/static/media/studio-2.76e2987e.jpg",
+    "static/media/studio-3.jpg": "/static/media/studio-3.1d5451ce.jpg",
+    "static/media/studio-4.jpg": "/static/media/studio-4.e064d090.jpg",
+    "static/media/studio-5.jpg": "/static/media/studio-5.ef5c30ea.jpg",
+    "static/media/unifood.png": "/static/media/unifood.50526aa8.png",
+    "static/media/userdashboard.png": "/static/media/userdashboard.a80b3e91.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.98a2b520.js",
+    "static/js/2.527a2313.chunk.js",
+    "static/css/main.d54cca74.chunk.css",
+    "static/js/main.ae4f7a14.chunk.js"
+  ]
+}
