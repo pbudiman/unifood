@@ -56,10 +56,10 @@ app.use(bodyParser.json());
 // support parsing of urlencoded bodies (e.g. for forms)
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// GET home page
-app.get('/', (req, res) => {
-    res.render('index' ,{title:'Unifood HomePage'});
-});
+// // GET home page
+// app.get('/', (req, res) => {
+//     res.render('index' ,{title:'Unifood HomePage'});
+// });
 
 // Handle user-management requests
 // the user routes are added onto the end of '/user-management'
