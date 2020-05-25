@@ -5,10 +5,13 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+    "server": "nodemon app.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "engines": {
-    "node":  "11.3.0"
+    "node": "11.3.0"
   },
   "author": "",
   "license": "ISC",

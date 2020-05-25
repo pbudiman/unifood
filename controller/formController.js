@@ -55,16 +55,31 @@ var deleteForm = function(req, res, next) {
 
 
 
+// // function to get all forms
+// const getAllForms = async (req, res) => {
+//     try {
+//         const all_form = await Form.find();
+//         return res.send(all_form);
+//     } catch (err) {
+//         res.status(400);
+//         return res.send("Database query failed!");
+//     }
+// };
 // function to get all forms
-const getAllForms = async (req, res) => {
+const getAllForms = async (io) => {
     try {
         const all_form = await Form.find();
-        return res.send(all_form);
+        // io.emit('Forms',all_form)
+        // return res.send(all_form);
+        io.emit("Forms",all_form)
     } catch (err) {
-        res.status(400);
-        return res.send("Database query failed!");
+        console.log("fail to retrieve")
+        // res.status(400);
+        // return res.send("Database query failed!");
+    
     }
 };
+
 
 // Remember to export the callbacks
 module.exports = {

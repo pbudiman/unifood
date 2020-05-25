@@ -83,6 +83,7 @@ app.use(express.static(path.join(__dirname, "client", "build")))
 // app.get("*", (req, res) => {
 //     res.sendFile(path.join(__dirname, "client", "public", "index.html"));
 // });
+const formController=require('./controller/formController')
 
 let interval;
 io.on("connection", socket => {
@@ -91,8 +92,10 @@ io.on("connection", socket => {
         clearInterval(interval)
     }
     interval=setInterval(()=>{
-        getApiAndEmit(socket),
-        getForms(socket)
+        // getApiAndEmit(socket),
+        // getForms(socket)
+        formController.getAllForms(io)
+
     },1000);
 
     socket.on("disconnect",()=> {
