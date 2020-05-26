@@ -20,7 +20,7 @@ import io from "socket.io-client";
 const useStyles = makeStyles(styles);
 
 // const endpoint="http://localhost:5000";
-var socket = io('http://localhost:5000');
+var socket = io.connect('http://localhost:5000');
 
 
 
@@ -145,6 +145,7 @@ export default function UserDashboard(props) {
   }
 
   function logOut(){
+    console.log("User "+username+" is logged out!")
     history.push({pathname:'/'})
   }
 
