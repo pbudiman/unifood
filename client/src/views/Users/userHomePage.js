@@ -20,7 +20,7 @@ import io from "socket.io-client";
 const useStyles = makeStyles(styles);
 
 // const endpoint="http://localhost:5000";
-var socket = io.connect('http://localhost:5000');
+var socket = io();
 
 
 
