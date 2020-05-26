@@ -12,26 +12,70 @@ const server = http.createServer(app);
 const io= socketIo(server);
 
 
-//to get notification
-const getApiAndEmit =  async socket =>{
-    try{
-        const res =  await axios.get("http://localhost:5000/forms/formList");
-        socket.emit("Notifications", res.data);
+// //to get notification
+// const getApiAndEmit =  async socket =>{
+//     try{
+//         const res =  await axios.get("http://localhost:5000/forms/formList");
+//         socket.emit("Notifications", res.data);
 
+//     }catch(error){
+//         console.error("Error")
+//     }
+// };
+
+// //to get all forms
+// const getForms= async socket=>{
+//     try{
+//         const response=await axios.get("http://localhost:5000/forms/formList");
+//         socket.emit("Forms", response.data);
+//     }catch (error){
+//         console.log("Error");
+//     }
+// 
+// );
+
+var formz;
+
+var connection_string = "mongodb+srv://pbudiman:budiman01@cluster0-hdaoj.mongodb.net/unifood?retryWrites=true&w=majority";
+
+const db = require("monk")(connection_string);
+const form_collection = db.get("forms");
+const getAllForms= async socket =>{
+    try{
+        form_collection.find({}).then( res => {
+            forms=res;
+        });
+        socket.emit("Forms",forms)
     }catch(error){
-        console.error("Error")
-    }
-};
-
-//to get all forms
-const getForms= async socket=>{
-    try{
-        const response=await axios.get("http://localhost:5000/forms/formList");
-        socket.emit("Forms", response.data);
-    }catch (error){
-        console.log("Error");
+        console.log("fail to retrieve forms")
     }
 }
+let interval;
+
+io.on("connection", (socket)=> {
+    console.log("New client Time connected");
+    // if (interval) {
+    //     clearInterval(interval);
+    // }
+    interval = setInterval(()=> getAllForms(socket),1000);
+
+    // Returning the initial data of food menu from FoodItems collection
+    // socket.on("initial_data", () => {
+    //     form_collection.find({}).then(docs => {
+    //         io.sockets.emit("get_data", docs);
+    //         console.log("emit data!");
+    //     }
+    //     );
+        // collection_foodItems.find({}).then(docs => {
+        //     io.sockets.emit("get_data", docs);
+        // });
+    // });
+
+    socket.on("disconnect", () => {
+        console.log("Client disconnected");
+        clearInterval(interval);
+    });
+});
 
 
 // view engine setup
@@ -82,27 +126,30 @@ app.use(express.static(path.join(__dirname, "client", "build")))
 
 // app.get("*", (req, res) => {
 //     res.sendFile(path.join(__dirname, "client", "public", "index.html"));
+// // });
+// const formController=require('./controller/formController')
+
+// let interval;
+// io.on("connection", socket => {
+//     // console.log("user connected", getApiAndEmit(socket));
+//     // if(interval){
+//     //     clearInterval(interval)
+//     // }
+//     // interval=setInterval(()=>{
+//     //     // getApiAndEmit(socket),
+//     //     // getForms(socket)
+//     //     formController.getAllForms(io)
+
+//     // },1000);
+
+//     socket.on("Forms", (io)=>{
+//         formController.getAllForms(io);
+//     })
+//     socket.on("disconnect",()=> {
+//         console.log("Client disconnected");
+//         clearInterval(interval)
+//     });
 // });
-const formController=require('./controller/formController')
-
-let interval;
-io.on("connection", socket => {
-    // console.log("user connected", getApiAndEmit(socket));
-    if(interval){
-        clearInterval(interval)
-    }
-    interval=setInterval(()=>{
-        // getApiAndEmit(socket),
-        // getForms(socket)
-        formController.getAllForms(io)
-
-    },1000);
-
-    socket.on("disconnect",()=> {
-        console.log("Client disconnected");
-        clearInterval(interval)
-    });
-});
 
 // Step 3
 if (process.env.NODE_ENV === 'production') {
@@ -113,14 +160,11 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-
 // //production mode
 // if(process.env.NODE_ENV === 'production') {  
 //     app.use(express.static(path.join(__dirname, 'client/build')));  
 //     app.get('*', (req, res) => {    res.sendfile(path.join(__dirname = 'client/build/index.html'));  
 // })}
-
-
 
 server.listen(process.env.PORT || 5000, () => {
     console.log("The Unifood app is listening on port 5000!");

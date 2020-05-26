@@ -16,9 +16,11 @@ import {useHistory} from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import socketIOClient from "socket.io-client";
-
+import io from "socket.io-client";
 const useStyles = makeStyles(styles);
-const endpoint="http://localhost:5000";
+
+// const endpoint="http://localhost:5000";
+var socket = io('http://localhost:5000');
 
 
 
@@ -49,10 +51,11 @@ export default function UserDashboard(props) {
   }
 
   useEffect(()=>{
-    const socket=socketIOClient(endpoint);
+    // const socket=socketIOClient(endpoint);
 
     // socket.on("Notifications", data=>setIncomingData(data));
     socket.on("Forms", data=>setForms(data));
+    console.log(forms)
 
     // Get new only the new incoming data
     // if(incomingData.length > allData.length) {
