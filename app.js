@@ -11,9 +11,11 @@ const socketIo = require("socket.io");
 const server = http.createServer(app);
 const io= socketIo(server);
 
-var connection_string = "mongodb+srv://pbudiman:budiman01@cluster0-hdaoj.mongodb.net/unifood?retryWrites=true&w=majority";
+var connection_string = "mongodb+srv"mongodb+srv://pbudiman:<password>@cluster0-hdaoj.mongodb.net/unifood?retryWrites=true&w=majority";://pbudiman:budiman01@cluster0-hdaoj.mongodb.net/unifood?retryWrites=true&w=majority";
+var mongo_url=connection_string.replace("<password>",process.env.MONGO_PASSWORD);
 
-const db = require("monk")(connection_string);
+
+const db = require("monk")(mongo_url);
 const form_collection = db.get("forms");
 const getAllForms= async socket =>{
     try{
