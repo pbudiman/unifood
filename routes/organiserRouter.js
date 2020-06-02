@@ -23,7 +23,7 @@ organiserRouter.get("/:email", organiserController.getOrganiserById);
 
 organiserRouter.post("/signup", organiserController.addOrganiser);
 
-organiserRouter.post("/update/:id", organiserController.updateOrganiser);
+organiserRouter.post("/backend/update/:id", organiserController.updateOrganiser);
 
 // organiserRouter.get('/delete/:email', (req,res, next)=>{
 //     res.redirect();

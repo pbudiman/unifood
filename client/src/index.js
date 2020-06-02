@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './fonts/Nunito-ExtraBold.ttf'
+
 ReactDOM.render(
   <Router>
     <App />

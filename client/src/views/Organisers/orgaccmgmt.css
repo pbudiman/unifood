@@ -1,0 +1,148 @@
+.container-acc-mgmt{
+    display: grid;
+    grid-template-columns: 10% 1fr 8fr 1fr 10%;
+    grid-template-rows: 1fr .75fr .75fr .75fr 0.5fr;
+    grid-template-areas: 
+    '. option option option .'
+    '.  .  orgButton1 .  .'
+    '.  .  orgButton2 .  .'
+    '.  .  orgButton3 .  .'
+    '.  .  orgButton4 .  .';
+    grid-gap:1%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-right: 10%;
+    padding-left: 10%;
+    row-gap: 5%;
+    column-gap: 2%;
+    
+  }
+  
+  .buttonOrg1 {
+    grid-area: orgButton1,orgButton2, orgButton3;
+    background-color: #896dc5; 
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 110%;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; 
+    transition-duration: 0.4s;
+    border-radius: 10px;
+    height: 100%;
+    font-weight: bold;
+  }
+  
+  .buttonOrg2 {
+    grid-area: orgButton2;
+    background-color: #896dc5; 
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 110%;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; 
+    transition-duration: 0.4s;
+    border-radius: 10px;
+    height: 100%;
+    font-weight: bold;
+  }
+
+  
+  .buttonOrg3 {
+    grid-area: orgButton3;
+    background-color: #e7737b; 
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 110%;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; 
+    transition-duration: 0.4s;
+    border-radius: 10px;
+    height: 100%;
+    font-weight: bold;
+  }
+
+  .buttonOrg4 {
+    grid-area: orgButton4;
+    background-color: #896dc5; 
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 110%;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; 
+    transition-duration: 0.4s;
+    border-radius: 10px;
+    height: 70%;
+    font-weight: bold;
+  }
+
+  .shadow:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+  
+  
+  .option{
+    grid-area:option;
+  }
+  
+  div.option {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    overflow: scroll;
+    max-width: 1fr;
+    padding: 20px ;
+  
+  }
+  
+  .label{
+    color:'white';
+    font-size: 25px;
+    /* padding-right: 10%; */
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    font-weight: bold;
+  }
+
+  .buttonleft{
+    float: left ;
+    background-color: antiquewhite;
+    border-radius: 10px;
+}
+  
+  .item-a {
+      grid-area: header;
+    }
+    .item-b {
+      grid-area: main;
+    }
+    .item-c {
+      grid-area: sidebar;
+    }
+    .item-d {
+      grid-area: footer;
+    }
+  
+  div.orgButton {
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.8);
+      max-width: 3fr;
+      text-align: center;
+      overflow: scroll;
+      padding-left: 10;
+    }

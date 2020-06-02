@@ -8,18 +8,20 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import HeaderLinks from "components/Header/HeaderLinks.js";
 import Parallax from "components/Parallax/Parallax.js";
-
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import './userhome.css'
 
 import styles from "assets/jss/material-kit-react/views/profilePage.js";
 import {useHistory} from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
-import socketIOClient from "socket.io-client";
+
+import swal from 'sweetalert';
+import LoginAuth from '../../LoginAuth'
+
 import io from "socket.io-client";
 const useStyles = makeStyles(styles);
 
-// const endpoint="http://localhost:5000";
 var socket = io();
 
 
@@ -53,24 +55,30 @@ export default function UserDashboard(props) {
   useEffect(()=>{
     // const socket=socketIOClient(endpoint);
 
-    // socket.on("Notifications", data=>setIncomingData(data));
     socket.on("Forms", data=>setForms(data));
-    console.log(forms)
+    // console.log(forms)
+    setIncomingData(forms);
+  
+
+    // socket.on("Notifications", data=>setIncomingData(data));
+    
+    //NOTIFSS
+    
 
     // Get new only the new incoming data
-    // if(incomingData.length > allData.length) {
-    //   for (let i= allData.length; i<incomingData.length; i++) {
-    //     newData.push(incomingData[i]);
-    //     // console.log("New PUSHED Data: ", incomingData[i]);
-    //   }
-    //   // All data = incoming data
-    //   setAllData(incomingData);
-    //   // keep the data in new data
-    //   setNewData(newData);
-    //   // console.log("NEW DATA LENGTH: ", newData.length);
+    if(incomingData.length > allData.length) {
+      for (let i= allData.length; i<incomingData.length; i++) {
+        newData.push(incomingData[i]);
+        // console.log("New PUSHED Data: ", incomingData[i]);
+      }
+      // All data = incoming data
+      setAllData(incomingData);
+      // keep the data in new data
+      setNewData(newData);
+      // console.log("NEW DATA LENGTH: ", newData.length);
 
-    // }
-    // getNotificationData();
+    }
+    getNotificationData();
 
   });
 
@@ -141,27 +149,51 @@ export default function UserDashboard(props) {
   }
 
   function goUserDetails(){
-    history.push({pathname:'/userdetails',state:{detail:username}});
+    history.push({pathname:'/user/details',state:{detail:username}});
   }
 
   function logOut(){
     console.log("User "+username+" is logged out!")
+    LoginAuth.signout();
     history.push({pathname:'/'})
   }
 
 
 
   function getLocation(){
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        setUserLat(position.coords.latitude);
-        setUserLong(position.coords.longitude);
-      });
-      console.log(userLat);
-      console.log(userLong);
-    } else {
-      alert("Geolocation is not supported in this browser");
-    }
+    swal({
+      text:"Allow Unifood to access your location?",
+      icon:"info",
+      buttons:{
+        cancel:"Decline",
+        accept:{
+          text:"Accept",
+          value:"accept"
+        },
+      },
+    }).then((value)=>{
+      switch(value){
+        case "accept":
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+              setUserLat(position.coords.latitude);
+              setUserLong(position.coords.longitude);
+            });
+            console.log(userLat);
+            console.log(userLong);
+            swal("Location is successfully shared with Unifood!");
+            break;
+
+          
+          } else {
+            swal("Geolocation is not supported in this browser!");
+          }
+        default:
+          swal("Location is not shared with Unifood!")
+      }
+
+    })
+   
   }
 
   
@@ -192,47 +224,55 @@ export default function UserDashboard(props) {
                     Hi {first_name}!
                   </div>
                   <div class='button'>
-                    <Button simple color="danger" size="md" onClick={()=>getLocation()}>
+                  <Button simple color="danger" size="md" onClick={()=>logOut()}>
                       <div class='writing'>
-                          Share my location!
+                          Log out
                         </div>
                     </Button>
+                    </div>
+  
+                  <div class='button'>
 
                     <Button simple color="danger" size="md" onClick={()=>goUserDetails()}>
                       <div class='writing'>
                           Account details
                         </div>
                     </Button>
+                    </div>
+                  
 
-                    <Button simple color="danger" size="md" onClick={()=>logOut()}>
+                    
+                    <div class='button'>
+                    <Button simple color="danger" size="md" onClick={()=>getLocation()}>
                       <div class='writing'>
-                          Log out
+                          Share my location!
                         </div>
                     </Button>
                     </div>
+                    
                 </div>
+          
             
-                {/* <div class="notifs">
-                    <div class='label'>
-                        Notifications
-                    </div>
+                <div class="notifs">
+                   
+                    <NotificationsIcon fontSize="large"></NotificationsIcon>
                     <br/>
                     {notifyData.map(res=>(
                         <div key={res.id}>
                             <div class='notifBox'>
-                                New Entry from {res.name}!<br/>
-                                At {res.address} <br/>
+                                Food available from {res.name}!<br/>
+                                Location: {res.address} <br/>
                                 Time: {res.time}<br/>
                             </div>
                         </div>
                     ))}
-                </div> */}
+                </div>
                 <div class="allForms">
                     <div class='label'>
                         Available Food
                     </div> 
                     <br/>
-                    {forms.map(res=>(
+                    {forms.reverse().map(res=>(
                         <div key={res.id}>
                             <div class='formBox'>
                                 New Entry from {res.name}!<br/>

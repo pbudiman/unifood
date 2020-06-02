@@ -11,31 +11,6 @@ const socketIo = require("socket.io");
 const server = http.createServer(app);
 const io= socketIo(server);
 
-
-// //to get notification
-// const getApiAndEmit =  async socket =>{
-//     try{
-//         const res =  await axios.get("http://localhost:5000/forms/formList");
-//         socket.emit("Notifications", res.data);
-
-//     }catch(error){
-//         console.error("Error")
-//     }
-// };
-
-// //to get all forms
-// const getForms= async socket=>{
-//     try{
-//         const response=await axios.get("http://localhost:5000/forms/formList");
-//         socket.emit("Forms", response.data);
-//     }catch (error){
-//         console.log("Error");
-//     }
-// 
-// );
-
-var formz;
-
 var connection_string = "mongodb+srv://pbudiman:budiman01@cluster0-hdaoj.mongodb.net/unifood?retryWrites=true&w=majority";
 
 const db = require("monk")(connection_string);

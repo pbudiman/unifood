@@ -42,14 +42,11 @@ export default function TeamSection() {
               <h4 className={classes.note}>
                 Patricia Budiman
                 <br />
-                <small className={classes.smallTitle}>insert role here</small>
               </h4>
               <CardBody>
                 <p className={classes.description}>
-                  You can write here details about one of your team members. You
-                  can give more details about what they do. Feel free to add
-                  some <a href="#pablo">links</a> for people to be able to
-                  follow them outside the site.
+                  Second year Bachelor of Science student majoring in Computer and Software System who aims to reduce food waste with the help of technology, 
+                  starting from my very own campus community.
                 </p>
               </CardBody>
               <CardFooter className={classes.justifyCenter}>
@@ -85,14 +82,13 @@ export default function TeamSection() {
               <h4 className={classes.note}>
                 Franklin Darmansa
                 <br />
-                <small className={classes.smallTitle}>insert role here</small>
               </h4>
               <CardBody>
                 <p className={classes.description}>
-                  You can write here details about one of your team members. You
-                  can give more details about what they do. Feel free to add
-                  some <a href="#pablo">links</a> for people to be able to
-                  follow them outside the site.
+                  Second-year Bachelor of Science student majoring in Computing and
+                  Software Systems. Have a big vision to solve problems around using tech and now,
+                  tackling food waste as a huge problem in society too.
+
                 </p>
               </CardBody>
               <CardFooter className={classes.justifyCenter}>
@@ -121,14 +117,13 @@ export default function TeamSection() {
               <h4 className={classes.note}>
                 Vivian Gao
                 <br />
-                <small className={classes.smallTitle}>insert role here</small>
               </h4>
               <CardBody>
                 <p className={classes.description}>
-                  You can write here details about one of your team members. You
-                  can give more details about what they do. Feel free to add
-                  some <a href="#pablo">links</a> for people to be able to
-                  follow them outside the site.
+                  Final year Bachelor of Commerce/Diploma of Computing student who's
+                  passionate about fintech, big data, and AI. After having experience
+                  organising university events myself and ending up with extra food
+                  sparked my passion for reducing waste!
                 </p>
               </CardBody>
               <CardFooter className={classes.justifyCenter}>

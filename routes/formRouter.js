@@ -25,6 +25,11 @@ formRouter.get('/updateForm', function(req, res, next) {
 });
 formRouter.post("/updateForm", formController.updateForm);
 
+// updating a form by meail
+formRouter.get('/updateFormbyEmail', function(req, res, next) {
+    res.render('updateFormbyEmail');
+});
+formRouter.post("/updateFormbyEmail", formController.updateFormbyEmail);
 
 // delete a form
 formRouter.get('/deleteForm', function(req, res, next) {
@@ -35,6 +40,10 @@ formRouter.post("/deleteForm", formController.deleteForm);
 
 // getting list of all users
 formRouter.get("/formList", formController.getAllForms);
+
+// getting list of form by email address
+formRouter.get("/formList/:email", formController.getAllFormsByEmail);
+
 
 // export the router
 module.exports = formRouter;

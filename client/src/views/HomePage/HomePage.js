@@ -23,7 +23,6 @@ import styles from "assets/jss/material-kit-react/views/landingPage.js";
 // Sections for this page
 import ProductSection from "./Sections/ProductSection.js";
 import TeamSection from "./Sections/TeamSection.js";
-import WorkSection from "./Sections/WorkSection.js";
 import {useHistory} from "react-router-dom";
 
 const dashboardRoutes = [];
@@ -61,12 +60,12 @@ export default function HomePage(props) {
               </h4>
               <br />
 
-              <Link to={"/userlogin"} className={classes.link}>
+              <Link to={"/user/login"} className={classes.link}>
 
                 <Button
-              color="danger"
+                color="danger"
                 size="lg"
-                href="/userlogin"
+                href="/user/login"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -75,7 +74,7 @@ export default function HomePage(props) {
               </Button>
               </Link>
 
-                <Link to={"/organiser-login"} className={classes.link}>
+                <Link to={"/organisers/login"} className={classes.link}>
                     <Button
                         color="danger"
                         size="lg"

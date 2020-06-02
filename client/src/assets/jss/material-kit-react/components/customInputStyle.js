@@ -1,5 +1,4 @@
 import {
-  primaryColor,
   dangerColor,
   successColor,
   defaultFont
@@ -17,7 +16,7 @@ const customInputStyle = {
       borderWidth: "1px !important"
     },
     "&:after": {
-      borderColor: primaryColor
+      borderColor: dangerColor
     }
   },
   underlineError: {

@@ -19,6 +19,10 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardFooter from "components/Card/CardFooter.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 
+import Grid from '@material-ui/core/Grid';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+
+
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
 import image from "assets/img/unifood.png";
@@ -26,6 +30,8 @@ import image from "assets/img/unifood.png";
 import {useHistory} from 'react-router-dom';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
+import swal from 'sweetalert';
+import LoginAuth from "../../LoginAuth"
 
 const useStyles = makeStyles(styles);
 
@@ -41,10 +47,13 @@ export default function UserLogin(props) {
     const [username,setUsername]= useState("")
     const [password,setPassword]=useState("")
 
-    function validateLogin(){
-
-      axios.post('users/login',{username,password})
-        .then(res => res.data.success? history.push({pathname:"/userdashboard",state:{detail:username}}): alert("Incorrect username/ password.\nPlease Try again"))
+    function validateLogin(event){
+        event.preventDefault();
+        axios.post('/users/login',{username,password})
+            .then(res => res.data.success? (
+                LoginAuth.authenticate(),
+                history.push({pathname:"/user/dashboard",state:{detail:username}}))
+                : swal("Incorrect username/ password.\nPlease Try again"));
     }
 
     
@@ -73,13 +82,14 @@ export default function UserLogin(props) {
                     backgroundPosition: "top center"
                 }}
             >
+              
                 <div className={classes.container}>
                     <GridContainer justify="center">
                         <GridItem xs={12} sm={12} md={4}>
                             <Card className={classes[cardAnimaton]}>
                                 <form className={classes.form}>
                                     <CardHeader color="danger" className={classes.cardHeader}>
-                                        <h4>Login</h4>
+                                        <h4>User Login</h4>
                                     </CardHeader>
                                   
                                     <CardBody>
@@ -117,23 +127,16 @@ export default function UserLogin(props) {
                                             labelText="Password"
                                             id="password"
                                             type="password"
-                                            // onChange={ (event)=>handlePassword(event)}
-                                            
                                             formControlProps={{
                                                 fullWidth: true,
                                                 onChange: (event)=>handlePassword(event)
                                         
                                             }}
                                             inputProps={{
-                                              // onChange: (event)=>handlePassword(event),
-                  
                                                 type: "password", 
-                                                
                                                 endAdornment: (
                                                     <InputAdornment position="end">
-                                                        <Icon className={classes.inputIconsColor}>
-
-                                                        </Icon>
+                                                        <VpnKeyIcon fontSize="small"></VpnKeyIcon>
                                                     </InputAdornment>
                                                 ),
                                                 autoComplete: "off"
@@ -141,17 +144,24 @@ export default function UserLogin(props) {
                                     
                                             
                                         />
-                                        
-                                    </CardBody>
-                                    <CardFooter className={classes.cardFooter}>
-                                        <Button simple color="danger" size="lg" onClick={()=>validateLogin()}>
-                                            Log in
+                                        <Button
+                                            type="submit"
+                                            variant="contained"
+                                            fullWidth
+                                            color="danger"
+                                            className={classes.submit}
+                                            onClick={(event)=>validateLogin(event)}
+                                            >
+                                            Log In
                                         </Button>
-                                        <br/>
-                                        <Link to='/usersignup' > Create an account </Link>
                                         
-                                    </CardFooter>
-                            
+                                        <Grid item>
+                                            <Link to="/user/signup" style={{ color: '#999999' }}>
+                                                Don't have an account? Sign Up
+                                             </Link>
+                                        </Grid>
+                                    </CardBody>
+                    
                                 </form>
                                 <div style={{alignItems:'centre'}}>
                                 </div>
@@ -164,3 +174,4 @@ export default function UserLogin(props) {
         </div>
     );
 }
+

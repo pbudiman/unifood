@@ -18,14 +18,24 @@ import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardFooter from "components/Card/CardFooter.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
+import Grid from '@material-ui/core/Grid';
 
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
 import image from "assets/img/unifood.png";
 
 import {useHistory} from 'react-router-dom';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import EmailIcon from '@material-ui/icons/Email';
+import PersonIcon from '@material-ui/icons/Person';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import axios from 'axios';
+
+import {Link} from 'react-router-dom';
+import LoginAuth from '../../LoginAuth';
+import swal from 'sweetalert';
+
 
 const useStyles = makeStyles(styles);
 
@@ -45,9 +55,14 @@ export default function UserLogin(props) {
     const [password,setPassword]=useState("")
 
 
-    function validateSignup(){
-      axios.post('users/signUp',{username,email,password,first_name,last_name})
-        .then(res => res.data.success? history.push({pathname:"/userdashboard", state:{detail:username}}): alert("Username/Email is already registed."))
+    function validateSignup(event){
+        event.preventDefault();
+      axios.post('/users/signUp',
+          {username,email,password,first_name,last_name})
+        .then(res => res.data.success?
+            (LoginAuth.authenticate() ,
+            history.push({pathname:"/user/dashboard", state:{detail:username}})):
+            swal("Username/Email is already registed."))
     }
 
     const handleEmail = (event) => {
@@ -109,11 +124,10 @@ export default function UserLogin(props) {
 
                                                 }}
                                                 inputProps={{
-                                                
                                                     type: "username",
                                                     endAdornment: (
                                                         <InputAdornment position="end">
-                                                            <People className={classes.inputIconsColor} />
+                                                            <EmailIcon fontSize='small'></EmailIcon>
                                                         </InputAdornment>
                                                     )
                                                 }}
@@ -135,7 +149,7 @@ export default function UserLogin(props) {
                                                     type: "text",
                                                     endAdornment: (
                                                         <InputAdornment position="end">
-                                                            <People className={classes.inputIconsColor} />
+                                                            <PersonIcon fontSize='small' />
                                                         </InputAdornment>
                                                     )
                                                 }}
@@ -156,7 +170,7 @@ export default function UserLogin(props) {
                                                     type: "text",
                                                     endAdornment: (
                                                         <InputAdornment position="end">
-                                                            <People className={classes.inputIconsColor} />
+                                                            <PersonIcon fontSize='small' />
                                                         </InputAdornment>
                                                     )
                                                 }}
@@ -168,9 +182,7 @@ export default function UserLogin(props) {
                                             labelText="Username"
                                             id="username"
                                             value={username}
-                                            // onChange={ (event)=>handleUsername(event)}
 
-                                           
                                             formControlProps={{
                                                 fullWidth: true,
                                                 onChange: (event)=>handleUsername(event)
@@ -179,10 +191,11 @@ export default function UserLogin(props) {
                                             inputProps={{
                                               
                                                 type: "username",
-                                                // onChange: (event)=>handleUsername(event),
+                                             
                                                 endAdornment: (
                                                     <InputAdornment position="end">
-                                                        <People className={classes.inputIconsColor} />
+                                                        <AccountCircleIcon fontSize='small' />
+
                                                     </InputAdornment>
                                                 )
                                             }}
@@ -203,29 +216,34 @@ export default function UserLogin(props) {
                                         
                                             }}
                                             inputProps={{
-                                              // onChange: (event)=>handlePassword(event),
-                  
                                                 type: "password", 
-                                                
                                                 endAdornment: (
                                                     <InputAdornment position="end">
-                                                        <Icon className={classes.inputIconsColor}>
-
-                                                        </Icon>
+                                                        <VpnKeyIcon fontSize="small"></VpnKeyIcon>
                                                     </InputAdornment>
                                                 ),
                                                 autoComplete: "off"
                                             }}
-                                    
-                                            
                                         />
-                                        
-                                    </CardBody>
-                                    <CardFooter className={classes.cardFooter}>
-                                        <Button simple color="primary" size="lg" onClick={()=>validateSignup()}>
-                                            Sign up
+
+                                        <Button
+                                            type="submit"
+                                            variant="contained"
+                                            fullWidth
+                                            color="danger"
+                                            className={classes.submit}
+                                            onClick={(event)=>validateSignup(event)}
+                                            >
+                                            Sign Up
                                         </Button>
-                                    </CardFooter>
+                                        
+                                        <Grid item>
+                                            <Link to="/user/login" style={{ color: '#999999' }}>
+                                                Already a member? Log in
+                                             </Link>
+                                        </Grid>
+                                    </CardBody>
+
                                 </form>
                             </Card>
                         </GridItem>

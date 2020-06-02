@@ -42,21 +42,20 @@ const logIn = (req, res, next) => {
 
 // function to add user account when a new user signs up
 const addUser = async (req, res,next) => {
-    const new_user = 
-    {
+    const new_user ={
         username,
         email,
         password,
         first_name,
         last_name,
-    }=req.body;
+    } = req.body;
 
     // check if the username/email has been registered
     User.exists({username:req.body.username} || {email:req.body.email},function (err,userExists) {
         if(err){
             res.send('An error occured');
         } else if (userExists) {
-            res.render("signUpError");
+            // res.render("signUpError");
             return res.json({ success: false, error: err });
 
         } else {
@@ -141,10 +140,9 @@ const deleteUser = (req,res) => {
 
     User.deleteOne( {username:requested} ,function (err) {
         if (err) {
-            console.error("Deletion Error");
+            return res.json({success:false})
         } else {
-
-            res.render('userDelete',{username:requested});
+            return res.json({success:true})
         }
     });
 };
