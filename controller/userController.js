@@ -5,31 +5,35 @@ const User = mongoose.model("users");
 
 //get all users
 const getUsers=(req,res)=>{
+   
     User.find()
-        .then(users=>res.json(users))
+        .then("here")
+        .then(users=>res.status(200).json(users))
         .catch(err=>res.status(400).json('Error: ' + err));
 };
 
 // function for user to log in
 const logIn = (req, res, next) => {
     const {username,password}=req.body;
-    console.log("server: "+req.body)
 
     // find the user in the database with the log in username
     User.findOne({username:username},function (err,user){
+        console.log(password)
         if (err) {
-            res.error("An error occured.");
+            res.send(err);
         }
         //validate whether the password and username matches each other
         else if (!user || password!=user.password) {
             console.log("Wrong username or password! Please go back and try again!");
             // res.render('loginError');
+
             return res.json({ success: false, error: err });
             // return res.status(500).send({message:'invalid'})
             
         }
         //when both username and password is correct, user is logged in
         else {
+            
             console.log("User "+username+" is logged in!")
             // return res.status(500).send({user})
             // res.render('welcomeUser',{ first_name:user.first_name, username:username });
@@ -41,7 +45,7 @@ const logIn = (req, res, next) => {
 };
 
 // function to add user account when a new user signs up
-const addUser = async (req, res,next) => {
+const addUser =  (req, res) => {
     const new_user ={
         username,
         email,
@@ -49,27 +53,40 @@ const addUser = async (req, res,next) => {
         first_name,
         last_name,
     } = req.body;
-
+   
     // check if the username/email has been registered
     User.exists({username:req.body.username} || {email:req.body.email},function (err,userExists) {
+    
         if(err){
             res.send('An error occured');
         } else if (userExists) {
             // res.render("signUpError");
+            console.log("here")
             return res.json({ success: false, error: err });
+            // res.send({ success: false, error: err });
 
         } else {
+            
             //check whether all required information to sign up is present
             if (new_user.username && new_user.email && new_user.password && new_user.first_name && new_user.last_name){
-                    var data = new User(new_user);
-                    data.save();
-                    console.log("User "+new_user.username+" is added!")
-                    // res.render('welcomeUser', {first_name: req.body.first_name});
-                    return res.json({ success: true, user: new_user });
-                    
+                var data = new User(new_user);
+                data.save();
+                console.log("User "+new_user.username+" is added!")
+      
+                // if(process.env.NODE_ENV==="test"){
+                //     console.log("yes")
+                //     res.send(data);
+                // }
+                // res.status(200).send(data);
+                // console.log("hereeeeee")
+                // res.render('welcomeUser', {first_name: req.body.first_name});
+                
+                return res.json({ success: true, user: new_user });
+                
             }
             else{
                 // res.render('userError');
+                res.send()
                 return res.json({ success: false, error: err });
                 
             }
@@ -109,7 +126,7 @@ const updateUser =  async (req, res) => {
             delete update[field]
         }
     }
-     console.log(update)
+  
 
     //find the user's details and update it
     User.findOneAndUpdate(condition, update, function(err,user){
@@ -117,7 +134,7 @@ const updateUser =  async (req, res) => {
             return res.json({success:false})
     
         } else if (!user) {
-            
+            return res.json({success:false})
         } else {
             
             if(update.first_name){

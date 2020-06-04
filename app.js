@@ -52,7 +52,6 @@ const getAllForms= async socket =>{
     }
 }
 let interval;
-
 io.on("connection", (socket)=> {
     console.log("New client Time connected");
     interval = setInterval(()=> getAllForms(socket),1000);
@@ -89,7 +88,6 @@ app.use(express.static(path.join(__dirname, "client", "build")))
 // Step 3
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static( 'client/build' ));
-
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); // relative path
     });
@@ -98,3 +96,5 @@ if (process.env.NODE_ENV === 'production') {
 server.listen(process.env.PORT || 5000, () => {
     console.log("The Unifood app is listening on port 5000!");
 });
+
+module.exports=app;

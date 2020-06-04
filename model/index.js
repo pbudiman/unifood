@@ -28,6 +28,3 @@ require("./organiser");
 require("./form");
 
 require("./location");
-module.exports = {
-    MONGO_URL
-}

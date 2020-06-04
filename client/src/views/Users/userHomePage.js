@@ -195,9 +195,9 @@ export default function UserDashboard(props) {
     })
    
   }
-
-  
+if(username){
   getFirstName();
+}
 
   return ( 
       

@@ -50,13 +50,16 @@ export default function UserDetails(props) {
             username=newUsername
 
         }
-        axios.post("users/login/update/"+oldUsername,{username,email,first_name,last_name,password})
-            .then(res=> res.data.success?history.push({pathname:'/user/dashboard', state:{detail:username}}):alert("Chosen email/username is taken."));
+        axios.post("/users/login/update/"+oldUsername,{username,email,first_name,last_name,password})
+            .then(res=> res.data.success?
+                (swal("Your account is successfully updated!"),
+                history.push({pathname:'/user/dashboard', state:{detail:username}}))
+                :alert("Chosen email/username is taken."));
     }
 
     function handleCancelation(){
 
-      history.push({pathname:'/user/dashboard', state:{detail:username}});
+      history.push({pathname:'/users/dashboard', state:{detail:username}});
     }
 
     function handleDeletion(){
@@ -73,9 +76,12 @@ export default function UserDetails(props) {
         })
         .then((value)=>{
             if(value=== "delete"){
-                axios.get("users/delete/"+oldUsername)
+                axios.get("/users/delete/"+oldUsername)
                     .then(res=>res.data.success?
-                        swal("Your account was successfully deleted.",{icon:"success"}).then(history.push('/')):
+
+                        (console.log(history)
+                        ,swal("Your account was successfully deleted.",{icon:"success"}),
+                        history.push('/')):
                         swal("An Error occured!\nPlease try again."));
                    
                 }
@@ -239,7 +245,7 @@ export default function UserDetails(props) {
                                        
                                        
                                       <div id='button'style={{backgroundColor:"rgb(175, 173, 170)", float:"left"}} >
-                                            <Button simple size="sm"  onClick={handleCancelation}>
+                                            <Button simple size="sm"  onClick={()=>handleCancelation()}>
                                               <div class="cancel">
                                                 Cancel
                                               </div>
@@ -248,7 +254,7 @@ export default function UserDetails(props) {
                                         
                                         
                                         <div id='button' style={{backgroundColor:"antiquewhite", float:"right"}}>
-                                              <Button simple color="danger" size="sm" onClick={handleChanges}>
+                                              <Button simple color="danger" size="sm" onClick={()=>handleChanges()}>
                                                 <div class="buttonFiller">
                                                     Confirm Changes
                                                 </div>
@@ -259,7 +265,7 @@ export default function UserDetails(props) {
 
 
                                         <div id='deletebutton' style={{backgroundColor:"white"}} >
-                                          <Button simple size="sm" onClick={handleDeletion}>
+                                          <Button simple size="sm" onClick={()=>handleDeletion()}>
                                                 <div class="delete">
                                                     Delete Account
                                                 </div>
