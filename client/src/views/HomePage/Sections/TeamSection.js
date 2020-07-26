@@ -1,10 +1,10 @@
 import React from "react";
+
 // nodejs library that concatenates classes
 import classNames from "classnames";
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-
-// @material-ui/icons
 
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
@@ -20,8 +20,10 @@ import team1 from "assets/img/faces/headshot2.png";
 import team2 from "assets/img/faces/headshot1.png";
 import team3 from "assets/img/faces/headshot3.png";
 
+// Using UI template from Material-UI
 const useStyles = makeStyles(styles);
 
+// Content about the team behind
 export default function TeamSection() {
   const classes = useStyles();
   const imageClasses = classNames(

@@ -4,14 +4,12 @@ import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 
-
 // core components
 import Header from "components/Header/Header.js";
 import Footer from "components/Footer/Footer.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import HeaderLinks from "components/Header/HeaderLinks.js";
-import NavPills from "components/NavPills/NavPills.js";
 import Parallax from "components/Parallax/Parallax.js";
 
 import profile from "assets/img/faces/unifood_logo.png";
@@ -19,22 +17,16 @@ import styles from "assets/jss/material-kit-react/views/profilePage.js";
 
 //card imports
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import InfoArea from "components/InfoArea/InfoArea.js";
-
 
 //form imports
 import io from "socket.io-client";
-import CardHeader from "../../components/Card/CardHeader";
-import PublicIcon from "@material-ui/icons/Public";
 var socket = io();
 
+// Using UI template from material-UI
 const useStyles = makeStyles(styles);
 
-
+// display all forms
 export default function ViewAllForms(props) {
     const [forms, setForms] = useState([]);
     const classes = useStyles();
@@ -44,20 +36,11 @@ export default function ViewAllForms(props) {
         classes.imgRoundedCircle,
         classes.imgFluid
     );
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: false
-    };
-    const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
 
     useEffect(()=>{
+        // listen on incoming data
         socket.on("Forms", data=>setForms(data));
         console.log(forms)
-
     });
 
     return (
@@ -90,7 +73,6 @@ export default function ViewAllForms(props) {
                             </GridItem>
                         </GridContainer>
 
-
                         {forms.reverse().map(res=>(
                             <div>
                             <div key={res.id}>
@@ -113,7 +95,6 @@ export default function ViewAllForms(props) {
                                 <br/>
                             </div>
                         ))}
-
 
                     </div>
                 </div>

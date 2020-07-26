@@ -1,10 +1,10 @@
 import React, {useState} from "react";
+import { useLocation, useHistory } from "react-router-dom";
+
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-
-import './orgupdate.css';
 // core components
 import Header from "components/Header/Header.js";
 import Footer from "components/Footer/Footer.js";
@@ -14,75 +14,47 @@ import HeaderLinks from "components/Header/HeaderLinks.js";
 import Parallax from "components/Parallax/Parallax.js";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import styles from "assets/jss/material-kit-react/views/profilePage.js";
-
 import CustomInput from "components/CustomInput/CustomInput.js";
-import Grid from '@material-ui/core/Grid';
 import GridItem from "../../components/Grid/GridItem";
 import axios from 'axios';
-
 import swal from 'sweetalert';
-
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import EmailIcon from '@material-ui/icons/Email';
-import PersonIcon from '@material-ui/icons/Person';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import { useLocation, useHistory } from "react-router-dom";
-
-// import './organiser.css'
+// Using template UI from Material UI
 const useStyles = makeStyles(styles);
-const endpoiupdate="http://localhost:5000";
 
-export default function OrganiserUpdate(props) {
+export default function OrganiserDelete(props) {
 
     let history = useHistory();
-  const location = useLocation();
-  const id=location.state.id;
-  const organisation_name = location.state.orgName;
-  const email_add = location.state.email_add;
-
+    const location = useLocation();
+    const id=location.state.id;
+    const email_add = location.state.email_add;
+    const orgName = location.state.orgName;
     const [email,setEmail]= useState("")
-    
-    // console.log("IDDD: "+id);
-
-
+    // Use existed design
     const classes = useStyles();
     const { ...rest } = props;
 
+    function deleteAccount(event){
+        event.preventDefault();
+        // Confirm deletion
+        if (email_add === email){
+            axios.get('/organisers/delete/'+id)
+            // delete success
+            .then(res => res.data.success?
+            swal(orgName+" account is deleted successfully.",{icon:"success"})
+            .then(history.push('/')):
+            // Failed to delete
+            swal("Failed to delete the account. \nPlease try again."));
+        } else {
+            swal("The email you entered was incorrect.");
+        }
+    }
+
+    // Handle email changes from input
     const handleEmail = (event) => {
         setEmail(event.target.value);
     };
-
-    // const handleOfficerName = (event) => {
-    //     setOfficerName(event.target.value);
-    // };
-
-    // const handleContactNumber = (event) => {
-    //     setContactNumber(event.target.value);
-    // };
-
-    // const handleEmail = (event) => {
-    //     console.log(email);
-    //     setEmail(event.target.value);
-    // };
-
-    // const handlePassword = (event) => {
-    //     setPassword(event.target.value);
-    // };
-
-    function deleteAccount(event){
-        event.preventDefault();
-
-        if (email_add == email){
-            axios.get('/organisers/delete/'+id)
-        .then(res => res.data.success?
-            history.push('/'):
-            alert("Fail to delete")
-        ).catch();
-        } else {
-            alert("Wrong org name");
-        }
-    }
 
     return (
         <div>
@@ -103,10 +75,6 @@ export default function OrganiserUpdate(props) {
                     <div>
                         <div className={classes.container}>
                             <div class='container'>
-                                <div class="heading">
-                                    {/* Enter your email to verify deletion */}
-                                </div>
-                            
                                 <GridContainer justify="center">
                                 <GridItem xs={10} sm={10} md={6}>
 
@@ -124,12 +92,12 @@ export default function OrganiserUpdate(props) {
                                                 onChange: (event)=>handleEmail(event)
                                               }}
                                             inputProps={{
-                                                type: "email"
-                                            //   endAdornment: (
-                                            //       <InputAdornment position="end">
-                                            //           <People className={classes.inputIconsColor} />
-                                            //       </InputAdornment>
-                                            //   )
+                                                type: "email",
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <EmailIcon />
+                                                    </InputAdornment>
+                                                )
                                         }}
                                         />
                                         <div style={{float:'right'}}>

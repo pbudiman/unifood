@@ -20,20 +20,15 @@ import swal from 'sweetalert';
 import { useLocation, useHistory } from "react-router-dom";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-// import './organiser.css'
+// Using UI template from Material-UI
 const useStyles = makeStyles(styles);
-const endpoiupdate="http://localhost:5000";
 
 export default function DeleteForm(props) {
 
     let history = useHistory();
     const location = useLocation();
-    const id=location.state.id;
     const organisation_name = location.state.orgName;
-    const email_add = location.state.email_add;
-    const [email,setEmail]= useState("")
     const [formID,setFormID]= useState("")
-
     const classes = useStyles();
     const { ...rest } = props;
 
@@ -41,8 +36,8 @@ export default function DeleteForm(props) {
         setFormID(event.target.value);
     };
 
-
     function deleteForm(){
+        // Gives warning
         swal({
             text: "Are you sure you would like to form with ID number: \n"
                 +formID+
@@ -57,6 +52,7 @@ export default function DeleteForm(props) {
             },
         })
             .then((value)=>{
+                    // do deletion
                     if(value=== "delete"){
                         axios.post(
                             '/forms/deleteForm/',
@@ -70,8 +66,6 @@ export default function DeleteForm(props) {
                 }
             )
     }
-
-
 
     return (
         <div>
@@ -93,7 +87,6 @@ export default function DeleteForm(props) {
                     <div className={classes.container}>
                         <div class='container'>
 
-
                             <div className='option'>
                                 <div className='label'>
                                     Delete Form
@@ -107,9 +100,6 @@ export default function DeleteForm(props) {
                                     <GridItem container justify="center">
                                         <h4> {organisation_name}, please re-enter your form ID to confirm deletion.</h4>
                                     </GridItem>
-
-
-
 
                                     <CustomInput
                                         labelText="Form ID:"
@@ -130,9 +120,6 @@ export default function DeleteForm(props) {
                                             )
                                         }}
                                     />
-
-
-
 
                                     <div style={{float:'right'}}>
                                         <Button

@@ -14,8 +14,10 @@ import InfoArea from "components/InfoArea/InfoArea.js";
 
 import styles from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
 
+// Using UI template from Material-UI
 const useStyles = makeStyles(styles);
 
+// Content on the home page under "About Unifood"
 export default function ProductSection() {
   const classes = useStyles();
   return (

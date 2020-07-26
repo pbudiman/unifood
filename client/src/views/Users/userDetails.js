@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { useLocation, useHistory } from "react-router-dom";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
@@ -13,13 +14,12 @@ import HeaderLinks from "components/Header/HeaderLinks.js";
 import Parallax from "components/Parallax/Parallax.js";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import styles from "assets/jss/material-kit-react/views/profilePage.js";
-
 import CustomInput from "components/CustomInput/CustomInput.js";
 import Grid from '@material-ui/core/Grid';
+
 import axios from 'axios';
-
 import swal from 'sweetalert';
-
+// icons
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import EmailIcon from '@material-ui/icons/Email';
 import PersonIcon from '@material-ui/icons/Person';
@@ -27,8 +27,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import './userDetails.css'
 
-import { useLocation, useHistory } from "react-router-dom";
-
+// Using UI template from Material UI
 const useStyles = makeStyles(styles);
 
 export default function UserDetails(props) {
@@ -45,24 +44,33 @@ export default function UserDetails(props) {
     const classes = useStyles();
     const { ...rest } = props;
     var username=oldUsername;
+    
+    // Handle update user details
     function handleChanges(){
+        // Change username
         if(newUsername){
             username=newUsername
-
         }
         axios.post("/users/login/update/"+oldUsername,{username,email,first_name,last_name,password})
             .then(res=> res.data.success?
                 (swal("Your account is successfully updated!"),
-                history.push({pathname:'/user/dashboard', state:{detail:username}}))
+                history.push(
+                    {
+                        pathname:'/user/dashboard', 
+                        state:{detail:username}
+                    }
+                ))
                 :alert("Chosen email/username is taken."));
     }
 
+    // Cancel update user details
     function handleCancelation(){
-
-      history.push({pathname:'/users/dashboard', state:{detail:username}});
+      history.push({pathname:'/user/dashboard', state:{detail:username}});
     }
 
+    // Handle user deletion
     function handleDeletion(){
+        // Warn user for deletion
         swal({
             text: "Are you sure you would like to delete your account?\n This action can't be reversed.",
             icon: "warning",
@@ -75,23 +83,20 @@ export default function UserDetails(props) {
             },
         })
         .then((value)=>{
+            // Delete account
             if(value=== "delete"){
                 axios.get("/users/delete/"+oldUsername)
                     .then(res=>res.data.success?
-
-                        (console.log(history)
-                        ,swal("Your account was successfully deleted.",{icon:"success"}),
-                        history.push('/')):
-                        swal("An Error occured!\nPlease try again."));
-                   
+                        swal("Your account was successfully deleted.",{icon:"success"})
+                        .then(history.push('/')):
+                        swal("An Error occured!\nPlease try again.")
+                    );
                 }
-                
             }
         )
     }
-        
-    
 
+    // Handle changes from input
     const handleEmail = (event) => {
         setNewEmail(event.target.value);
     };
@@ -100,14 +105,10 @@ export default function UserDetails(props) {
     };
     const handleLastName = (event) => {
         setNewLastName(event.target.value);
-
     };
-
     const handleUsername = (event) => {
         setNewUsername(event.target.value);
-
     };
-
     const handlePassword = (event) => {
         setNewPassword(event.target.value);
     };
@@ -135,8 +136,6 @@ export default function UserDetails(props) {
                                 Fill details to be changed
                             </div>
 
-
-
                             <GridContainer justify="center" >
 
                                 <Grid item xs={5} justify="center">
@@ -146,20 +145,20 @@ export default function UserDetails(props) {
                                             id="email"
                                             value={email}
                                            
-                                            formControlProps={{
-
-                                                fullWidth: true,
-                                                onChange: (event)=>handleEmail(event)
-
-                                            }}
-                                            inputProps={{
-                                                type: "username",
-                                                endAdornment: (
-                                                    <InputAdornment position="end">
-                                                        <EmailIcon fontSize='small'></EmailIcon>
-                                                    </InputAdornment>
-                                                )
-                                            }}
+                                            formControlProps=
+                                                {{
+                                                    fullWidth: true,
+                                                    onChange: (event)=>handleEmail(event)
+                                                }}
+                                            inputProps=
+                                                {{
+                                                    type: "username",
+                                                    endAdornment: (
+                                                        <InputAdornment position="end">
+                                                            <EmailIcon fontSize='small'></EmailIcon>
+                                                        </InputAdornment>
+                                                    )
+                                                }}
                                            
                                         />
 
@@ -167,9 +166,10 @@ export default function UserDetails(props) {
                                             labelText="New First Name"
                                             id="newfirstname"
                                             value={first_name}
-                                            formControlProps={{
-                                                fullWidth: true,onChange: (event)=>handleFirstname(event)
-                                            }}
+                                            formControlProps=
+                                                {{
+                                                    fullWidth: true,onChange: (event)=>handleFirstname(event)
+                                                }}
                                             inputProps={{
                                                 type: "username",
                                                 endAdornment: (
@@ -196,8 +196,7 @@ export default function UserDetails(props) {
                                                         <PersonIcon fontSize='small'/>
                                                     </InputAdornment>
                                                 )
-                                            }}
-                                            
+                                            }}  
                                         />
 
                                         <CustomInput
@@ -223,7 +222,6 @@ export default function UserDetails(props) {
                                             id="password"
                                             value={password}
                                             formControlProps={{
-
                                                 fullWidth: true,
                                                 onChange: (event)=>handlePassword(event)
                                             }}
@@ -235,45 +233,33 @@ export default function UserDetails(props) {
                                                     </InputAdornment>
                                                 )
                                             }}
-                                            
-
                                         />
-                                        
-                                        </div>
+                                    </div>                                 
 
-                                     
-                                       
-                                       
-                                      <div id='button'style={{backgroundColor:"rgb(175, 173, 170)", float:"left"}} >
-                                            <Button simple size="sm"  onClick={()=>handleCancelation()}>
-                                              <div class="cancel">
-                                                Cancel
-                                              </div>
+                                    <div id='button'style={{backgroundColor:"rgb(175, 173, 170)", float:"left"}} >
+                                        <Button simple size="sm"  onClick={()=>handleCancelation()}>
+                                            <div class="cancel">
+                                            Cancel
+                                            </div>
+                                        </Button>
+                                    </div>
+ 
+                                    <div id='button' style={{backgroundColor:"antiquewhite", float:"right"}}>
+                                            <Button simple color="danger" size="sm" onClick={()=>handleChanges()}>
+                                            <div class="buttonFiller">
+                                                Confirm Changes
+                                            </div>
                                             </Button>
-                                        </div>
-                                        
-                                        
-                                        <div id='button' style={{backgroundColor:"antiquewhite", float:"right"}}>
-                                              <Button simple color="danger" size="sm" onClick={()=>handleChanges()}>
-                                                <div class="buttonFiller">
-                                                    Confirm Changes
-                                                </div>
-                                              </Button>
-                                        </div>
+                                    </div>
 
-                                        
-
-
-                                        <div id='deletebutton' style={{backgroundColor:"white"}} >
-                                          <Button simple size="sm" onClick={()=>handleDeletion()}>
-                                                <div class="delete">
-                                                    Delete Account
-                                                </div>
-                                            </Button> 
-                                        </div>
-                                        
+                                    <div id='deletebutton' style={{backgroundColor:"white"}} >
+                                        <Button simple size="sm" onClick={()=>handleDeletion()}>
+                                            <div class="delete">
+                                                Delete Account
+                                            </div>
+                                        </Button> 
+                                    </div>
                                 </Grid>
-
                             </GridContainer>
                         </div>
                     </div>

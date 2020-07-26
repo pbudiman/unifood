@@ -5,18 +5,12 @@ import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 import Carousel from "react-slick";
 
-// @material-ui/icons
-import Camera from "@material-ui/icons/Camera";
-import Palette from "@material-ui/icons/Palette";
-import Favorite from "@material-ui/icons/Favorite";
 // core components
 import Header from "components/Header/Header.js";
 import Footer from "components/Footer/Footer.js";
-import Button from "components/CustomButtons/Button.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import HeaderLinks from "components/Header/HeaderLinks.js";
-import NavPills from "components/NavPills/NavPills.js";
 import Parallax from "components/Parallax/Parallax.js";
 
 import profile from "assets/img/faces/unifood_logo.png";
@@ -26,10 +20,12 @@ import image1 from "../../assets/img/info1.png";
 import image2 from "../../assets/img/info2.png";
 import image3 from "../../assets/img/moodboard.png";
 
-
+// Using UI template from Material-UI
 const useStyles = makeStyles(styles);
 
+// About Us page
 export default function AboutUs(props) {
+    // Use the existed design
     const classes = useStyles();
     const { ...rest } = props;
     const imageClasses = classNames(
@@ -37,6 +33,7 @@ export default function AboutUs(props) {
         classes.imgRoundedCircle,
         classes.imgFluid
     );
+    // Setting for image
     const settings = {
         dots: true,
         infinite: true,
@@ -45,7 +42,7 @@ export default function AboutUs(props) {
         slidesToScroll: 1,
         autoplay: false
     };
-    const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
+
     return (
         <div>
             <Header

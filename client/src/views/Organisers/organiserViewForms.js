@@ -9,36 +9,23 @@ import { makeStyles } from "@material-ui/core/styles";
 import HeaderLinks from "components/Header/HeaderLinks.js";
 import Parallax from "components/Parallax/Parallax.js";
 
-import './orgaccmgmt.css'
-
 import styles from "assets/jss/material-kit-react/views/profilePage.js";
-import {Link, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
-import io from "socket.io-client";
 import GridContainer from "../../components/Grid/GridContainer";
 import GridItem from "../../components/Grid/GridItem";
 import classNames from "classnames";
 import Card from "@material-ui/core/Card";
-import CardBody from "../../components/Card/CardBody";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import { typography } from '@material-ui/system';
 
 //icons
-import UpdateIcon from '@material-ui/icons/Update';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
-import ClearAllIcon from '@material-ui/icons/ClearAll';
-import OrganiserUpdate from "./organiserUpdateAccount";
 import swal from 'sweetalert';
 
-
+// Using UI template from Material-UI
 const useStyles = makeStyles(styles);
-var socket = io();
-
-
 
 export default function OrganiserViewForms(props) {
 
@@ -50,34 +37,31 @@ export default function OrganiserViewForms(props) {
     const classes = useStyles();
     const { ...rest } = props;
     const [forms, setForms] = useState([]);
-    const [load, setLoad] = useState(false);
-    const [error, setError] = useState('');
 
     useEffect(() => {
         axios.get("/forms/formList/"+email_add)
             .then(res => {
                 setForms(res.data);
-                setLoad(true);
             })
             .catch(err => {
                 swal("Error! Please try again!");
             })
-    }, []);
+    });
 
+    // Redirect to other pages
     const deleteForm = () =>{
         let path = '/delete-form';
         history.push(path, {orgName:organisation_name, email_add:email_add});
     }
-
-    const updateForm = () => {
-        let path = '/update-form';
-        history.push(path, {id:id, orgName:organisation_name, email_add:email_add});
+    const organiserHome = ()=> {
+        history.push('/organiser/home',
+        {
+            id:id,
+            orgName:organisation_name,
+            email_add:email_add
+        })
     }
-
-
-
     return (
-
         <div>
             <Header
                 color="transparent"
@@ -93,11 +77,7 @@ export default function OrganiserViewForms(props) {
             <Parallax small filter image={require("assets/img/aboutus-bg.png")} />
             <div className={classNames(classes.main, classes.mainRaised)}>
                 <div className={classes.container}>
-
-
                     <div className={classes.container}>
-
-
                         <div className='option'>
                             <div className='label'>
                                 {organisation_name}'s Listings
@@ -127,8 +107,7 @@ export default function OrganiserViewForms(props) {
                                                             <h6>Time: {res.time}</h6>
                                                             <h6>Location: {res.address}</h6>
                                                             <h6>Quantity: {res.quantity}</h6>
-                                                            <h6>Photo: {res.photo}</h6>
-                                                            <h6>latitude: {res.latitude} longitude: {res.longitude}</h6>
+                                                            <h6>latitude: {res.latitude.toFixed(4)} longitude: {res.longitude.toFixed(4)}</h6>
 
                                                         </CardContent>
 
@@ -137,7 +116,16 @@ export default function OrganiserViewForms(props) {
                                                             <Button
                                                                 size="small"
                                                                 formID= {res._id}
-                                                                onClick={updateForm}
+                                                                onClick=
+                                                                {
+                                                                    ()=>history.push('/update-form', 
+                                                                        {
+                                                                            // Use the particular form id
+                                                                            id: res._id,
+                                                                            orgName:organisation_name,
+                                                                            email_add:email_add
+                                                                        })
+                                                                }
                                                                 class="inline">
                                                                 Update
                                                             </Button>
@@ -149,13 +137,8 @@ export default function OrganiserViewForms(props) {
                                                                 class="inline">
                                                                 Delete
                                                             </Button>
-
-
                                                         </CardActions>
                                                         </GridItem>
-
-
-
                                                     </Card>
                                                 </GridItem>
                                             </GridContainer>
@@ -171,7 +154,7 @@ export default function OrganiserViewForms(props) {
                                         size="small"
                                         target="_blank"
                                         startIcon={<KeyboardReturnIcon />}
-                                        onClick={() => {history.goBack()}}
+                                        onClick={organiserHome}
                                         round
                                     >
                                         <strong>Back</strong>

@@ -12,7 +12,7 @@ const ProtectedRoute = ({ component: Component,loggedIn,path,...rest }) => {
       render={(props)=>{
         return LoginAuth.isAuthenticated?
           (<Component {...props}/>):
-          (swal("Login/Sign up is reguired"),
+          (swal("Login/Sign up is required"),
           <Redirect to={{pathname:"/",}}/>);
       }}
     />

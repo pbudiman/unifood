@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const Form = mongoose.model("forms");
 const Organiser = mongoose.model("organisers");
 
-
 // function to create a new form
 const createForm = async (req, res,next) => {
     const new_form = {
@@ -18,18 +17,16 @@ const createForm = async (req, res,next) => {
         latitude:req.body.latitude,
         longitude: req.body.longitude
     };
+
     console.log(new_form)
     if (new_form.email&&new_form.name&&new_form.description&&new_form.address&&new_form.time){
         try {
             var data = new Form(new_form);
             data.save();
             console.log("New Form Posted")
-            // console.log(new_form)
             return res.json({ success: true });
         } catch (err) {
-            // res.status(400);
             console.log("fails to post form")
-            // return res.send("Error making post!");
             return res.json({ success: false });
         }
     }else{
@@ -37,11 +34,6 @@ const createForm = async (req, res,next) => {
     }
    
 };
-
-
-
-
-
 
 //update form
 const updateForm = async (req, res, next) => {
@@ -52,7 +44,7 @@ const updateForm = async (req, res, next) => {
             res.send("An error has occurred!");
             return res.json({success:false})
         } else if (!Form) {
-            return res.send('Form is not found!');
+            res.send('Form is not found!');
             return res.json({success:false})
         }
         doc.email = req.body.email;
@@ -70,36 +62,28 @@ const updateForm = async (req, res, next) => {
     res.json({success:true});
 };
 
+// update form content by id
+const updateFormbyId = (req, res) => {
+    var id = req.params.id;
+    const update= {name,description,address,time,quantity,latitude,longitude}=req.body;
 
-
-
-
-//update form by email
-const updateFormbyEmail = async (req, res, next) => {
-    var email = req.body.email;
-
-    Form.findById(email, function(err, doc) {
-        if (err) {
-            res.send("An error has occurred!");
-        } else if (!Form) {
-            return res.send('Form is not found!');
+    //only take the filled information
+    for( field in update ){
+        if(update[field] ==''){
+            delete update[field]
         }
-        doc.email = req.body.email;
-        doc.name = req.body.name;
-        doc.description = req.body.description;
-        doc.address = req.body.address;
-        doc.time = req.body.time;
-        doc.quantity = req.body.quantity;
-        doc.photo = req.body.photo;
-        doc.latitude = req.body.latitude;
-        doc.longitude = req.body.longitude;
-        doc.save();
+    }
+
+    //find id and update the content
+    Form.findByIdAndUpdate(id, update, function(err,form){
+        if (err){
+            return res.json({success:false})
+        } else if (!form) {
+        } else {
+            return res.json({success:true});
+        }
     });
-    console.log("Form is updated!");
-    res.redirect('/forms');
 };
-
-
 
 // delete a form by form ID
 var deleteForm = function(req, res, next) {
@@ -117,11 +101,6 @@ var deleteForm = function(req, res, next) {
 
 };
 
-
-
-
-
-
 // function to get all forms
 const getAllForms = async (req, res) => {
     try {
@@ -137,7 +116,6 @@ const getAllForms = async (req, res) => {
 const getAllFormsByEmail = async (req, res) => {
     //var email = req.params.email;
     var email=  req.params.email;
-
     try {
         const all_form = await Form.find().where("email").in(email).exec();
         return res.send(all_form);
@@ -147,12 +125,11 @@ const getAllFormsByEmail = async (req, res) => {
     }
 };
 
-// Remember to export the callbacks
 module.exports = {
     createForm,
     getAllForms,
     updateForm,
     deleteForm,
-    updateFormbyEmail,
+    updateFormbyId,
     getAllFormsByEmail,
 };

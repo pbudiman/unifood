@@ -4,17 +4,13 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 
-
-const axios = require("axios");
 const http = require("http");
 const socketIo = require("socket.io");
 const server = http.createServer(app);
 const io= socketIo(server);
 
-
-
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views_backend'));
 app.set('view engine', 'pug');
 
 require('./model')
@@ -24,21 +20,18 @@ const formRouter = require('./routes/formRouter');
 const userRouter = require('./routes/userRouter');
 const organiserRouter = require('./routes/organiserRouter');
 
-// set up location routes
-const locationRouter = require('./routes/locationRouter');
-
 app.use(cors());
 
-// use the body-parser middleware, which parses request bodies into req.body
-// support parsing of json
+
+// support json parsing
 app.use(bodyParser.json());
-// support parsing of urlencoded bodies (e.g. for forms)
+// support urlencoded bodies parsing
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var connection_string = "mongodb+srv://pbudiman:<password>@cluster0-hdaoj.mongodb.net/unifood?retryWrites=true&w=majority";
-var mongo_url = connection_string.replace("<password>",process.env.MONGO_PASSWORD);
+var mongo_url = connection_string.replace("<password>", process.env.MONGO_PASSWORD);
 
-
+// Get forms from mongodb and emit to client using socket.io
 const db = require("monk")(mongo_url);
 const form_collection = db.get("forms");
 const getAllForms= async socket =>{
@@ -51,50 +44,38 @@ const getAllForms= async socket =>{
         console.log("fail to retrieve forms")
     }
 }
+
+// Listen from the client
 let interval;
 io.on("connection", (socket)=> {
     console.log("New client Time connected");
     interval = setInterval(()=> getAllForms(socket),1000);
+
     socket.on("disconnect", () => {
         console.log("Client disconnected");
         clearInterval(interval);
     });
 });
 
-
-// // GET home page
-// app.get('/', (req, res) => {
-//     res.render('index' ,{title:'Unifood HomePage'});
-// });
-
-// Handle user-management requests
-// the user routes are added onto the end of '/user-management'
+// Routers, to handle requests
 app.use('/users', userRouter);
-// handle form-management requests
-//the form routes are added to the end of '/form-management'
 app.use('/forms', formRouter);
-// handle organiser-management requests
-// the form routes are added to the end of '/organiser-management'
 app.use('/organisers', organiserRouter);
-// handle organiser-management requests
-// the form routes are added to the end of '/organiser-management'
-app.use('/locations', locationRouter);
 
-// //Static file declaration
-// app.use(express.static(path.join(__dirname, 'client/build')));
-// ... other app.use middleware 
 app.use(express.static(path.join(__dirname, "client", "build")))
 
-// Step 3
+// For app in heroku
 if (process.env.NODE_ENV === 'production') {
+    // production build that can serve our server
     app.use(express.static( 'client/build' ));
+
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); // relative path
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
     });
 }
 
 server.listen(process.env.PORT || 5000, () => {
-    console.log("The Unifood app is listening on port 5000!");
+    console.log("The Unifood app is listening!");
 });
 
-module.exports=app;
+module.exports={app}

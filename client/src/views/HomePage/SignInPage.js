@@ -1,11 +1,10 @@
-import React, {useState} from "react";
+import React from "react";
+import {useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom'
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Icon from "@material-ui/core/Icon";
-// @material-ui/icons
-import red from '@material-ui/core/colors/red';
-import People from "@material-ui/icons/People";
+
 // core components
 import Header from "components/Header/Header.js";
 import HeaderLinks from "components/Header/HeaderLinks.js";
@@ -16,26 +15,18 @@ import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
-import CardFooter from "components/Card/CardFooter.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
 
-import Grid from '@material-ui/core/Grid';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-
-
+// login template
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
-
+// unifood image
 import image from "assets/img/unifood.png";
-
-import {useHistory} from 'react-router-dom';
-import axios from 'axios';
-import {Link} from 'react-router-dom'
-import swal from 'sweetalert';
-import LoginAuth from "../../LoginAuth"
+// Icon
 import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturn";
 
+// Using UI template from Material-UI
 const useStyles = makeStyles(styles);
 
+// The template for sign in and sign up page
 export default function SignInPage(props) {
     let history = useHistory()
     const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
@@ -44,8 +35,6 @@ export default function SignInPage(props) {
     }, 700);
     const classes = useStyles();
     const { ...rest } = props;
-
-
 
     return (
         <div>
@@ -64,7 +53,7 @@ export default function SignInPage(props) {
                     backgroundPosition: "top center"
                 }}
             >
-
+                
                 <div className={classes.container}>
                     <GridContainer justify="center">
                         <GridItem xs={12} sm={12} md={4}>
@@ -92,7 +81,7 @@ export default function SignInPage(props) {
                                             </Button>
                                         </Link>
 
-                                        <Link to={"/organisers/login"} className={classes.link}>
+                                        <Link to={"/organiser/login"} className={classes.link}>
                                             <Button
                                                 color="danger"
                                                 size="lg"
@@ -114,13 +103,8 @@ export default function SignInPage(props) {
                                             >
                                                 <strong>Back</strong>
                                             </Button>
-
-
                                         </GridItem>
-
-
                                     </CardBody>
-
                                 </form>
                                 <div style={{alignItems:'centre'}}>
                                 </div>

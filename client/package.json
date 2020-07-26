@@ -19,6 +19,7 @@
     "material-ui-colors": "^1.0.0",
     "material-ui-core": "^5.0.1",
     "material-ui-icons": "^1.0.0-beta.36",
+    "moment": "^2.26.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",

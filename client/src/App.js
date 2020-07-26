@@ -1,5 +1,4 @@
-import React, { Component, useEffect ,useState} from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
 
@@ -27,7 +26,6 @@ import UpdateForm from "./views/Forms/formUpdate";
 import AboutUs from "./views/HomePage/aboutUs";
 import HomePage from "./views/HomePage/HomePage";
 import ProtectedRoute from './protectedRoutes';
-import LoginAuth from "./LoginAuth";
 import SignInPage from "./views/HomePage/SignInPage";
 
 var hist = createBrowserHistory();
@@ -40,25 +38,21 @@ export default function App(){
             <div className="App">
             <Switch>
                 <ProtectedRoute path="/user/details"  component={UserDetails} />
-                {/* <Route path="/user/details" component={UserDetails}/> */}
                 <ProtectedRoute path="/user/dashboard"  component={UserDashboard} />
-                {/* <Route path="/user/dashboard" component={UserDashboard}/> */}
                 <Route path="/user/signup" component={UserSignUp} />
                 <Route path="/user/login" component={UserLogin} />
                 
-                {/* <Route path="/organisers/home" component={OrganiserHomePage} /> */}
-                <ProtectedRoute path="/organisers/home" component={OrganiserHomePage} />
-                {/* <Route path="/organisers/account" component={OrganiserAccMgmt} /> */}
-                <ProtectedRoute path="/organisers/account/update" component={OrganiserUpdate} />
-                <Route path="/organisers/account/delete" component={OrganiserDelete} />
-                <Route path="/organisers/login" component={OrganiserLogin} />
-                <Route path="/organisers/signup" component={OrganiserSignup} />
+                <ProtectedRoute path="/organiser/home" component={OrganiserHomePage} />
+                <ProtectedRoute path="/organiser/account/update" component={OrganiserUpdate} />
+                <ProtectedRoute path="/organiser/account/delete" component={OrganiserDelete} />
+                <Route path="/organiser/login" component={OrganiserLogin} />
+                <Route path="/organiser/signup" component={OrganiserSignup} />
 
-                <Route path="/organisers/forms" component={OrganiserViewForms} />
-                <Route path="/all-listings" component={ViewAllForms} />
-                <Route path="/post-new-form" component={PostNewForm} />
-                <Route path="/delete-form" component={DeleteForm} />
-                <Route path="/update-form" component={UpdateForm} />
+                <ProtectedRoute path="/organiser/forms" component={OrganiserViewForms} />
+                <ProtectedRoute path="/all-listings" component={ViewAllForms} />
+                <ProtectedRoute path="/post-new-form" component={PostNewForm} />
+                <ProtectedRoute path="/delete-form" component={DeleteForm} />
+                <ProtectedRoute path="/update-form" component={UpdateForm} />
 
                 <Route path="/log-in" component={SignInPage} />
                 <Route path="/about-us" component={AboutUs} />

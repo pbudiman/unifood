@@ -2,10 +2,7 @@ import React, {useState} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import Icon from "@material-ui/core/Icon";
-// @material-ui/icons
-import red from '@material-ui/core/colors/red';
-import People from "@material-ui/icons/People";
+
 // core components
 import Header from "components/Header/Header.js";
 import HeaderLinks from "components/Header/HeaderLinks.js";
@@ -16,7 +13,6 @@ import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
-import CardFooter from "components/Card/CardFooter.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import Grid from '@material-ui/core/Grid';
 
@@ -36,10 +32,10 @@ import {Link} from 'react-router-dom';
 import LoginAuth from '../../LoginAuth';
 import swal from 'sweetalert';
 
-
+// Using UI template from Material UI
 const useStyles = makeStyles(styles);
 
-export default function UserLogin(props) {
+export default function UserSignUp(props) {
     let history = useHistory()
     const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
     setTimeout(function() {
@@ -54,17 +50,18 @@ export default function UserLogin(props) {
     const [username,setUsername]= useState("")
     const [password,setPassword]=useState("")
 
-
+    // To accept/reject the sign up process
     function validateSignup(event){
         event.preventDefault();
-      axios.post('/users/signUp',
-          {username,email,password,first_name,last_name})
+        axios.post('/users/signUp',
+            {username,email,password,first_name,last_name})
         .then(res => res.data.success?
             (LoginAuth.authenticate() ,
             history.push({pathname:"/user/dashboard", state:{detail:username}})):
             swal("Username/Email is already registed."))
     }
 
+    // handle changes from the input
     const handleEmail = (event) => {
         setEmail(event.target.value);
       };
@@ -74,11 +71,9 @@ export default function UserLogin(props) {
     const handleLastName = (event) => {
         setLastName(event.target.value);
     };
-    
     const handleUsername = (event) => {
       setUsername(event.target.value);
     };
-
     const handlePassword = (event) => {
       setPassword(event.target.value);
     };
@@ -106,24 +101,22 @@ export default function UserLogin(props) {
                             <Card className={classes[cardAnimaton]}>
                                 <form className={classes.form}>
                                     <CardHeader color="danger" className={classes.cardHeader}>
-                                        <h4>User Login</h4>
+                                        <h4>Sign Up</h4>
                                     </CardHeader>
                                     
-                                    <CardBody>
-                                      
+                                    <CardBody>  
                                         <CustomInput
                                                 labelText="Email"
                                                 id="email"
                                                 value={email}
-                                               
-
-                                            
-                                                formControlProps={{
+                                                formControlProps=
+                                                {{
                                                     fullWidth: true,
                                                     onChange: (event)=>handleEmail(event)
 
                                                 }}
-                                                inputProps={{
+                                                inputProps=
+                                                {{
                                                     type: "username",
                                                     endAdornment: (
                                                         <InputAdornment position="end">
@@ -131,21 +124,20 @@ export default function UserLogin(props) {
                                                         </InputAdornment>
                                                     )
                                                 }}
-                                            
                                             />
 
                                             <CustomInput
                                                 labelText="First Name"
                                                 id="first name"
                                                 value={first_name}
-                                            
-                                                formControlProps={{
+                                                formControlProps=
+                                                {{
                                                     fullWidth: true,
                                                     onChange: (event)=>handleFirstname(event)
 
                                                 }}
-                                                inputProps={{
-                                                
+                                                inputProps=
+                                                {{
                                                     type: "text",
                                                     endAdornment: (
                                                         <InputAdornment position="end">
@@ -159,14 +151,14 @@ export default function UserLogin(props) {
                                                 labelText="Last Name"
                                                 id="last name"
                                                 value={last_name}
-                                            
-                                                formControlProps={{
+                                                formControlProps=
+                                                {{
                                                     fullWidth: true,
                                                     onChange: (event)=>handleLastName(event)
 
                                                 }}
-                                                inputProps={{
-                                                
+                                                inputProps=
+                                                {{
                                                     type: "text",
                                                     endAdornment: (
                                                         <InputAdornment position="end">
@@ -174,48 +166,40 @@ export default function UserLogin(props) {
                                                         </InputAdornment>
                                                     )
                                                 }}
-                                            
                                             />  
-                                        
 
                                         <CustomInput
                                             labelText="Username"
                                             id="username"
                                             value={username}
-
-                                            formControlProps={{
+                                            formControlProps=
+                                            {{
                                                 fullWidth: true,
                                                 onChange: (event)=>handleUsername(event)
 
                                             }}
-                                            inputProps={{
-                                              
+                                            inputProps=
+                                            {{  
                                                 type: "username",
-                                             
                                                 endAdornment: (
                                                     <InputAdornment position="end">
                                                         <AccountCircleIcon fontSize='small' />
-
                                                     </InputAdornment>
                                                 )
-                                            }}
-                                           
+                                            }} 
                                         />
-                                        
-                                      
-                                        
                                        <CustomInput
                                             labelText="Password"
                                             id="password"
                                             type="password"
-                                            // onChange={ (event)=>handlePassword(event)}
-                                            
-                                            formControlProps={{
+                                            formControlProps=
+                                            {{
                                                 fullWidth: true,
                                                 onChange: (event)=>handlePassword(event)
                                         
                                             }}
-                                            inputProps={{
+                                            inputProps=
+                                            {{
                                                 type: "password", 
                                                 endAdornment: (
                                                     <InputAdornment position="end">
@@ -243,7 +227,6 @@ export default function UserLogin(props) {
                                              </Link>
                                         </Grid>
                                     </CardBody>
-
                                 </form>
                             </Card>
                         </GridItem>

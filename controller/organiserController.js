@@ -3,10 +3,8 @@ const mongoose = require("mongoose");
 // import user model
 const Organiser = mongoose.model("organisers");
 
-
 // function to get all organisers
 const getOrganisers = async (req, res) => {
-
     try {
         const organisers = await Organiser.find();
         return res.send(organisers);
@@ -16,54 +14,22 @@ const getOrganisers = async (req, res) => {
     }
 };
 
-
-// function for user to log in
-const logIn = (req, res, next) => {
-    const {username,password}=req.body;
-    console.log("server: "+req.body)
-
-    // find the user in the database with the log in username
-    User.findOne({username:username},function (err,user){
-        if (err) {
-            res.error("An error occured.");
-        }
-        //validate whether the password and username matches each other
-        else if (!user || password!=user.password) {
-            console.log("Wrong username or password! Please go back and try again!");
-            // res.render('loginError');
-            return res.json({ success: false, error: err });
-            // return res.status(500).send({message:'invalid'})
-            
-        }
-        //when both username and password is correct, user is logged in
-        else {
-            console.log("User "+username+" is logged in!")
-            // return res.status(500).send({user})
-            // res.render('welcomeUser',{ first_name:user.first_name, username:username });
-            return res.json({ success: true, user: user });
-            // res.send(true)
-           
-        }
-    });
-};
-
 // function for login
 const loginOrganiser = (req, res)=>{
     const {email,password} = req.body;
     Organiser.findOne({email:email}, function(err, organiser){
        if (err){
            return res.json({success:false, error:err})
-           res.error("An error occured.");
        }
+       // Incorrect email or password
        else if(!organiser || password!=organiser.password){
-        //    res.send("The email or password you entered incorrect");
+           console.log("Incorrect email/password");
             return res.json({success:false, error:err})
-       } else {
-           console.log(organiser)
-        //    res.render('organiserLogon',
-        //        {organisation_name:organiser.organisation_name, id:organiser._id});
+       }
+       // login successful
+       else {
+           console.log("Organiser with email "+ email +" logged in")
             return (res.json({ success: true, organiser:organiser }));
-
        }
     });
 };
@@ -94,23 +60,6 @@ const organiserPreview = (req, res, next)=>{
     });
 };
 
-// function to get organiser by email
-const getOrganiserById = (req, res) => {
-    var requested =  req.params.email;
-
-    Organiser.findOne({email:requested},(err,organiser)=>{
-        if (err) {
-            console.error("An error occured.");
-        }
-        else if(!organiser){
-            res.send("Sorry, the email is not registered.\nPlease check again your input.")
-        }
-        else {
-            res.send(organiser);
-        }
-    });
-};
-
 // function to create organiser
 const addOrganiser = async (req, res) => {
     var new_organiser = {
@@ -121,26 +70,20 @@ const addOrganiser = async (req, res) => {
         password: req.body.password
     };
     Organiser.exists( {email:req.body.email},(err,organiserExists) => {
-        console.log("Organiser doesnt exist");
         if(err){
-            res.send('An error occured.');
+            return res.send('An error occured.');
         }
         else if(organiserExists){
-            res.send("The email has been used.\nPlease enter other email.");
-            // res.status(409);
+            return res.send("The email has been used.\nPlease enter other email.");
         }
         else if (req.body.organisation_name && req.body.officer_name && req.body.contact_number
             && req.body.email && req.body.password){
             var data =  new Organiser(new_organiser);
             data.save();
-            // res.send('Organisation account created.');
-            // return res.json({ success: true });
-            // res.send({ message: 'Organisation created' });
-            res.json({success:true});
-            // res.status(201);
+            return res.json({success:true});
         }
         else {
-            res.send("You haven't filled all the required fields.");
+            return res.send("You haven't filled all the required fields.");
         }
     });
 };
@@ -148,18 +91,32 @@ const addOrganiser = async (req, res) => {
 //function to update an organiser
 const updateOrganiser =  async (req, res) =>{
     var id = req.params.id;
+    const update= {
+        organisation_name,
+        officer_name,
+        contact_number,
+        email,
+        password}=req.body;
 
-    Organiser.findByIdAndUpdate(id, { $set: req.body }, (err,organiser_id)=>{
+    //only take the filled information
+    for( field in update ){
+        if(update[field] ==''){
+            delete update[field]
+        }
+    }
+
+    Organiser.findByIdAndUpdate(id, update, (err,organiser_id)=>{
+        console.log("this is the id: "+id);
         if (err){
             console.error('An error occured! '+ err);
-            return res.send({success:false})
+            res.json({success:false});
         }
+        // Organiser not found
         else if(!organiser_id){
-            return res.send({success:false, message:"Organiser is not found"});
-            res.send('Organiser is not found.');
+            res.json({success:false, message:"Organiser is not found"});
         }
         else {
-            return (res.json({ success: true, organiser:organiser }));
+            res.json({ success: true, organiser:organiser_id});
         }
     });
 };
@@ -174,18 +131,15 @@ const deleteOrganiser = (req,res) => {
             res.json({success:false})
         }
         else {
-            // res.send("Organiser '" + organiser.organisation_name + "' is successfully deleted!");
+            console.log("Organiser deleted")
             res.json({success:true});
         }
     });
-
 };
 
 // export the functions
-
 module.exports = {
     getOrganisers,
-    getOrganiserById,
     addOrganiser,
     updateOrganiser,
     deleteOrganiser,

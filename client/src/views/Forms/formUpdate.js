@@ -9,8 +9,6 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import People from "@material-ui/icons/People";
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
-import EmailIcon from '@material-ui/icons/Email';
-import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 
 // core components
 import Header from "components/Header/Header.js";
@@ -19,7 +17,6 @@ import Button from "components/CustomButtons/Button.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import HeaderLinks from "components/Header/HeaderLinks.js";
-import NavPills from "components/NavPills/NavPills.js";
 import Parallax from "components/Parallax/Parallax.js";
 
 import styles from "assets/jss/material-kit-react/views/profilePage.js";
@@ -28,24 +25,15 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
-// import './userDetails.css'
-
 import { useLocation } from "react-router-dom";
 import { useHistory }  from 'react-router-dom';
-import CardBody from "../../components/Card/CardBody";
 import CardFooter from "../../components/Card/CardFooter";
-
-
-//upload photo
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
 
 import swal from 'sweetalert';
 import KeyboardReturnIcon from "@material-ui/icons/KeyboardReturn";
-import LoginAuth from "../../LoginAuth";
 
+// Using UI template from Material-UI
 const useStyles = makeStyles(styles);
-
 
 export default function UpdateForm(props) {
     const location = useLocation();
@@ -53,14 +41,12 @@ export default function UpdateForm(props) {
 
     const email_add = location.state.email_add;
     const orgName = location.state.orgName;
-    const email = email_add;
-    const [id,setID]=useState("")
+    const id = location.state.id;
     const [name,setName]=useState("")
     const [description,setDescription]=useState("")
     const [address,setAddress]=useState("")
     const [time,setTime]= useState("")
     const [quantity,setQuantity]=useState("")
-    const [photo,setPhoto]=useState("")
     const [latitude,setLatitude]=useState(Number)
     const [longitude,setLongitude]=useState(Number)
 
@@ -69,8 +55,10 @@ export default function UpdateForm(props) {
 
 
     function updateForm(){
+
+        // Warn user to update the form
         swal({
-            text: "Are you sure you would like to update listing ID"
+            text: "Are you sure you would like to update listing ID "
                 +id+
                 "\n\n This action can't be reversed.",
             icon: "info",
@@ -83,22 +71,27 @@ export default function UpdateForm(props) {
             },
         })
             .then((value)=>{
-                    if(value=== "confirm"){
+                // update form
+                if(value=== "confirm"){
+                    try {
                         axios.post(
-                            '/forms/updateForm',
-                            {id,email,name,description,address,time,quantity,photo,latitude,longitude})
+                            '/forms/updateFormbyId/'+id,
+                            {name,description,address,time,quantity,latitude,longitude})
                             .then(res=>res.data.success?
-                                swal("Form #"+id+" successfully updated",{icon:"success"}).then(history.goBack()):
+                                swal("Form #"+id+" successfully updated",{icon:"success"})
+                                .then(history.push('/organiser/forms',{orgName: orgName, email_add:email_add})):
                                 swal("An Error occured!\nPlease check the form ID and try again."));
 
+                    } catch(err){
                     }
-
+                    
                 }
-            )
+            }
+        )
     }
 
-
     function getLocation(){
+        // Ask permission
         swal({
             text:"Allow Unifood to access your location?",
             icon:"info",
@@ -111,33 +104,29 @@ export default function UpdateForm(props) {
             },
         }).then((value)=>{
             switch(value){
+                // Get location
                 case "accept":
                     if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(position => {
                             setLatitude(position.coords.latitude);
                             setLongitude(position.coords.longitude);
                         });
-                        console.log(latitude);
-                        console.log(longitude);
                         swal("Location is successfully shared with Unifood!");
                         break;
-
-
                     } else {
                         swal("Geolocation is not supported in this browser!");
                     }
+                    break;
                 default:
                     swal("Location is not shared with Unifood!")
             }
-
         })
-
     }
 
-    const handleID = (event) => {
-        setID(event.target.value);
-    };
-
+    // Handle changes from input
+    // const handleID = (event) => {
+    //     setID(event.target.value);
+    // };
     const handleName = (event) => {
         setName(event.target.value);
     };
@@ -152,15 +141,6 @@ export default function UpdateForm(props) {
     };
     const handleQuantity = (event) => {
         setQuantity(event.target.value);
-    };
-    const handlePhoto = (event) => {
-        setPhoto(event.target.value);
-    };
-    const handleLatitude = (event) => {
-        setLatitude(event.target.value);
-    };
-    const handleLongitude = (event) => {
-        setLongitude(event.target.value);
     };
 
     return (
@@ -193,7 +173,7 @@ export default function UpdateForm(props) {
                                 <Grid item xs={5} justify="center">
                                     <div class='container'>
 
-                                        <CustomInput
+                                        {/* <CustomInput
                                             labelText="Listing ID*"
                                             id="id"
                                             value={id}
@@ -213,8 +193,6 @@ export default function UpdateForm(props) {
                                             }}
                                         />
 
-
-
                                         <CustomInput
                                             labelText="Account Email*"
                                             id="email"
@@ -222,7 +200,6 @@ export default function UpdateForm(props) {
                                             variant="outlined"
                                             formControlProps={{
                                                 fullWidth: true,
-
                                             }}
                                             inputProps={{
                                                 type: "text",
@@ -233,7 +210,7 @@ export default function UpdateForm(props) {
                                                     </InputAdornment>
                                                 )
                                             }}
-                                        />
+                                        /> */}
 
                                         <CustomInput
                                             labelText="Updated Organisation and Event Name*"
@@ -256,8 +233,6 @@ export default function UpdateForm(props) {
                                             }}
                                         />
 
-
-
                                         <CustomInput
                                             labelText="Updated Description of Food and Event*"
                                             id="description"
@@ -279,8 +254,6 @@ export default function UpdateForm(props) {
                                             }}
                                         />
 
-
-
                                         <CustomInput
                                             labelText="Updated Location*"
                                             fullwidth
@@ -289,7 +262,6 @@ export default function UpdateForm(props) {
                                             formControlProps={{
                                                 fullWidth: true,
                                                 onChange: (event)=>handleAddress(event)
-
                                             }}
                                             inputProps={{
                                                 type: "text",
@@ -301,7 +273,6 @@ export default function UpdateForm(props) {
                                             }}
                                         />
 
-
                                         <GridItem container justify="center">
                                             <Button
                                                 primary
@@ -311,7 +282,6 @@ export default function UpdateForm(props) {
                                                 share my coordinates
                                             </Button>
                                         </GridItem>
-
 
                                         <CustomInput
                                             labelText=""
@@ -343,60 +313,12 @@ export default function UpdateForm(props) {
                                                 )
                                             }}
                                         />
-
-                                        <CustomInput
-                                            accept="image/*"
-                                            labelText="Photo"
-                                            id="photo"
-                                            value={photo}
-                                            formControlProps={{
-                                                fullWidth: true,
-                                                onChange: (event)=>handlePhoto(event)
-                                            }}
-                                            inputProps={{
-                                                type: "file",
-                                                endAdornment: (
-                                                    <InputAdornment position="end">
-                                                        <PhotoCamera className={classes.inputIconsColor} />
-                                                    </InputAdornment>
-                                                )
-                                            }}
-                                        />
-
-
-
-                                        {/* <CustomInput
-                                            labelText="Latitude"
-                                            id="latitude"
-                                            value={latitude}
-                                            formControlProps={{
-                                                fullWidth: true,
-                                                onChange: (event)=>handleLatitude(event)
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                            }}
-                                        />
-
-                                        <CustomInput
-                                            labelText="Longitude"
-                                            id="longitude"
-                                            value={longitude}
-                                            formControlProps={{
-                                                fullWidth: true,
-                                                onChange: (event)=>handleLongitude(event)
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                            }} */}
-
-
+                                        
                                         <CardFooter className={classes.cardFooter} style={{justifyContent: 'center'}}>
                                             <Button variant="outlined" color="danger" size="lg" onClick={()=>updateForm()}>
                                                 Update Listing
                                             </Button>
                                         </CardFooter>
-
 
                                         <GridItem container justify="center">
                                             <Button
@@ -410,7 +332,6 @@ export default function UpdateForm(props) {
                                                 <strong>Back</strong>
                                             </Button>
                                         </GridItem>
-
 
                                     </div>
                                 </Grid>
