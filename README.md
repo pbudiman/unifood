@@ -1,6 +1,6 @@
 # Unifood
 A web application designed to connect event organisers to students
-across campus and reduce edible waste within The University of Melbourne.
+across campus and reduce edible waste within The University of Melbourne where students will be notified within the web application when they are located near the available food.
 
 https://unifood-web.herokuapp.com/
 
