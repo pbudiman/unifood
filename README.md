@@ -1,10 +1,10 @@
 # Unifood
 A web application designed to connect event organisers to students
-across campus and reduce edible waste within The University of Melbourne.
+across campus and reduce edible waste within The University of Melbourne where students will be notified within the web application when they are located near the available food.
 
-https://unifood-app.herokuapp.com/
+https://unifood-web.herokuapp.com/
 
-**Created by:** Team Singularity: Vivian Gao (917035), Franklin Aldo Darmansa (1025392), Patricia Angelica Budiman (1012861)
+**Created by:** Team Singularity: Patricia Angelica Budiman (1012861), Vivian Gao (917035), Franklin Aldo Darmansa (1025392)
 
 **Built with:** Node.JS, Express, MongoDB, React, Material-UI, React-Bootstrap
 
@@ -126,14 +126,14 @@ User accounts are able to access their dashboard where all new event and food li
 
 ## Front-End Client
 
-**Home Page:** https://unifood-app.herokuapp.com 
+**Home Page:** https://unifood-web.herokuapp.com 
 
-**About Page:** https://unifood-app.herokuapp.com/about-us
+**About Page:** https://unifood-web.herokuapp.com/about-us
 
-**All Listings:** https://unifood-app.herokuapp.com/all-listings
+**All Listings:** https://unifood-web.herokuapp.com/all-listings
 
 ### Account Management
-**Account Index:** https://unifood-app.herokuapp.com/log-in
+**Account Index:** https://unifood-web.herokuapp.com/log-in
 
 #### User Account Management:
 
@@ -141,11 +141,11 @@ Username: pbudiman
 <br>
 Password: userpb
 
-**User Login:** https://unifood-app.herokuapp.com/user/login
+**User Login:** https://unifood-web.herokuapp.com/user/login
 <br>
-**User Signup:** https://unifood-app.herokuapp.com/user/signup
+**User Signup:** https://unifood-web.herokuapp.com/user/signup
 <br>
-**Update/Delete User:** https://unifood-app.herokuapp.com/user/details
+**Update/Delete User:** https://unifood-web.herokuapp.com/user/details
 
 #### Organiser Account Management:
 
@@ -153,23 +153,23 @@ Email: external@demo.com
 <br>
 Password: demo
 
-**Organiser Login:** https://unifood-app.herokuapp.com/organiser/login
+**Organiser Login:** https://unifood-web.herokuapp.com/organiser/login
 <br>
-**Organiser Signup:** https://unifood-app.herokuapp.com/organiser/signup
+**Organiser Signup:** https://unifood-web.herokuapp.com/organiser/signup
 <br>
-**Update Organiser:** https://unifood-app.herokuapp.com/organiser/account/update
+**Update Organiser:** https://unifood-web.herokuapp.com/organiser/account/update
 <br>
-**Delete Organiser:** https://unifood-app.herokuapp.com/organiser/account/delete
+**Delete Organiser:** https://unifood-web.herokuapp.com/organiser/account/delete
 
 ### Location-Based Notifications
 
 #### Login as user:
-https://unifood-app.herokuapp.com/user/login
+https://unifood-web.herokuapp.com/user/login
 
 #### User dashboaard:
 The user dashboard should be and automatically accessed after the user successfully login.
 
-URL: https://unifood-app.herokuapp.com/user/dashboard
+URL: https://unifood-web.herokuapp.com/user/dashboard
 
 This page contains:
  - all of the forms
@@ -179,12 +179,12 @@ To get notifications, user should click the "Share my location " button, allow t
 
 ## Form Management
 #### Login as organiser:
-https://unifood-app.herokuapp.com/organiser/login
+https://unifood-web.herokuapp.com/organiser/login
 
 #### Organiser dashboard:
 The organiser dashboard is automatically accessed after successsful login.
 
-URL: https://unifood-app.herokuapp.com/organiser/home
+URL: https://unifood-web.herokuapp.com/organiser/home
 
 Now you can: 
 - Post new form 
@@ -280,7 +280,7 @@ URL: http://localhost:5000
 
 
 ## Reference
-1. INFO30005 lectures and workshops material Week 1-5
+1. INFO30005 lectures and workshops materials
 
 ## Acknowledgement
-This project is done by group 'Singularity': Vivian Gao (917035), Franklin Aldo Darmansa (1025392), Patricia Angelica Budiman (1012861)
+This project is done by group 'Singularity': Patricia Angelica Budiman (1012861), Vivian Gao (917035), Franklin Aldo Darmansa (1025392)
